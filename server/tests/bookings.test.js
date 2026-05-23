@@ -34,7 +34,7 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await mongoose.disconnect();
-  await mongo.stop();
+  await mongo?.stop();
 });
 
 describe('Booking API', () => {

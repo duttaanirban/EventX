@@ -1,16 +1,40 @@
-import { useParams, Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useMemo } from 'react';
+import { useParams } from 'react-router-dom';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { CalendarDays, MapPin, Ticket } from 'lucide-react';
 import { eventsService } from '../services/events.service';
-import { Button } from '../components/ui/Button';
 import { Skeleton } from '../components/ui/Skeleton';
-import { formatCurrency } from '../utils/currency';
 import { formatDate } from '../utils/date';
+import { BookingPanel } from '../components/booking/BookingPanel';
+import { useEventSocket } from '../hooks/useEventSocket';
 
 export default function EventDetailPage() {
   const { id } = useParams();
+  const queryClient = useQueryClient();
   const { data, isLoading } = useQuery({ queryKey: ['event', id], queryFn: () => eventsService.detail(id) });
   const event = data?.event;
+
+  const socketHandlers = useMemo(
+    () => ({
+      'availability-updated': (payload) => {
+        if (payload.eventId !== id) return;
+        queryClient.setQueryData(['event', id], (current) =>
+          current?.event
+            ? {
+                ...current,
+                event: { ...current.event, availableSeats: payload.availableSeats }
+              }
+            : current
+        );
+      },
+      'event-updated': (updatedEvent) => {
+        if (updatedEvent._id === id) queryClient.setQueryData(['event', id], { event: updatedEvent });
+      }
+    }),
+    [id, queryClient]
+  );
+
+  useEventSocket(id, socketHandlers);
 
   if (isLoading) {
     return (
@@ -49,16 +73,7 @@ export default function EventDetailPage() {
             </p>
           </div>
         </div>
-        <aside className="h-max rounded-lg border border-slate-200 bg-white p-5 shadow-soft dark:border-white/10 dark:bg-white/5">
-          <p className="text-sm font-semibold text-slate-500">Ticket price</p>
-          <p className="mt-1 text-3xl font-black">{formatCurrency(event.ticketPrice)}</p>
-          <p className="mt-3 text-sm text-slate-600 dark:text-slate-300">Secure checkout, instant QR ticket, and email confirmation.</p>
-          <Link to={`/events/${event._id}?book=true`}>
-            <Button variant="accent" className="mt-5 w-full">
-              Book tickets
-            </Button>
-          </Link>
-        </aside>
+        <BookingPanel event={event} />
       </section>
     </main>
   );

@@ -90,6 +90,9 @@ export const verifyPayment = asyncHandler(async (req, res) => {
     payment.razorpaySignature = razorpay_signature;
     payment.booking = booking._id;
     await payment.save({ session });
+
+    booking.paymentId = payment._id;
+    await booking.save({ session });
   });
   session.endSession();
 

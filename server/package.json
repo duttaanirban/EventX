@@ -7,7 +7,7 @@
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
     "seed": "node src/jobs/seed.js",
-    "test": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --runInBand",
+    "test": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules MONGOMS_DOWNLOAD_DIR=.cache/mongodb-binaries jest --runInBand --testTimeout=120000",
     "lint": "eslint src tests",
     "format": "prettier --write src tests"
   },
