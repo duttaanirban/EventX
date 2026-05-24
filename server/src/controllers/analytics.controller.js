@@ -1,5 +1,6 @@
 import User from '../models/User.js';
 import Payment from '../models/Payment.js';
+import { ApiError } from '../utils/ApiError.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { analyticsService } from '../services/analytics.service.js';
 
@@ -25,6 +26,7 @@ export const updateUserStatus = asyncHandler(async (req, res) => {
     update,
     { new: true, runValidators: true }
   );
+  if (!user) throw new ApiError(404, 'User not found');
   res.json({ success: true, data: { user } });
 });
 
