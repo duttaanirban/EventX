@@ -27,7 +27,7 @@ export const createOrder = asyncHandler(async (req, res) => {
   try {
     order = await createRazorpayOrder({
       amount,
-      receipt: `eventx_${event._id}_${Date.now()}`
+      receipt: `evt_${Date.now().toString(36)}_${event._id.toString().slice(-8)}`
     });
   } catch (error) {
     const message =
