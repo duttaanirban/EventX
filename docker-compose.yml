@@ -9,7 +9,8 @@ services:
 
   server:
     build:
-      context: ./server
+      context: .
+      dockerfile: server/Dockerfile
     env_file:
       - ./server/.env
     ports:
@@ -21,7 +22,11 @@ services:
 
   client:
     build:
-      context: ./client
+      context: .
+      dockerfile: client/Dockerfile
+      args:
+        VITE_API_URL: http://localhost:5000/api
+        VITE_SOCKET_URL: http://localhost:5000
     ports:
       - "4173:4173"
     depends_on:

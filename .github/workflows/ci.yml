@@ -15,27 +15,16 @@ jobs:
         with:
           node-version: 20
           cache: npm
-          cache-dependency-path: |
-            server/package-lock.json
-            client/package-lock.json
-      - name: Install backend
+          cache-dependency-path: package-lock.json
+      - name: Install workspaces
         run: npm ci
-        working-directory: server
-      - name: Install frontend
-        run: npm ci
-        working-directory: client
       - name: Lint backend
-        run: npm run lint
-        working-directory: server
-      - name: Test backend
-        run: npm test
-        working-directory: server
+        run: npm run lint --workspace eventx-server
       - name: Lint frontend
-        run: npm run lint
-        working-directory: client
+        run: npm run lint --workspace eventx-client
+      - name: Test backend
+        run: npm test --workspace eventx-server
       - name: Test frontend
-        run: npm test
-        working-directory: client
+        run: npm test --workspace eventx-client
       - name: Build frontend
-        run: npm run build
-        working-directory: client
+        run: npm run build --workspace eventx-client

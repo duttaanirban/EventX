@@ -1,0 +1,11 @@
+{
+  "buildCommand": "npm run build --workspace eventx-client",
+  "outputDirectory": "client/dist",
+  "installCommand": "npm ci",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
