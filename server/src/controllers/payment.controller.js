@@ -21,10 +21,29 @@ export const createOrder = asyncHandler(async (req, res) => {
   if (event.availableSeats < ticketCount) throw new ApiError(409, 'Not enough seats available');
 
   const amount = event.ticketPrice * ticketCount;
-  const order = await createRazorpayOrder({
-    amount,
-    receipt: `eventx_${event._id}_${Date.now()}`
-  });
+  if (amount < 1) throw new ApiError(400, 'Paid checkout requires a ticket price of at least INR 1');
+
+  let order;
+  try {
+    order = await createRazorpayOrder({
+      amount,
+      receipt: `eventx_${event._id}_${Date.now()}`
+    });
+  } catch (error) {
+    const message =
+      error?.error?.description ||
+      error?.description ||
+      error?.message ||
+      'Unable to create Razorpay order';
+
+    console.error('Razorpay order creation failed', {
+      statusCode: error?.statusCode,
+      code: error?.error?.code,
+      description: message
+    });
+
+    throw new ApiError(error?.statusCode || 502, message);
+  }
 
   const payment = await Payment.create({
     user: req.user._id,
