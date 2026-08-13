@@ -243,17 +243,6 @@ Set `MONGO_URI` on Render to your Atlas connection string. Use a production data
 - Use app passwords or a transactional email provider for SMTP.
 - Review `npm audit` output before production release. Some warnings are transitive/deprecated package notices.
 
-## Screenshots
-
-Add screenshots to `docs/screenshots/`:
-
-- `landing.png`
-- `events.png`
-- `checkout.png`
-- `ticket.png`
-- `organizer-dashboard.png`
-- `admin-dashboard.png`
-
 ## Production Checklist
 
 - [ ] Configure MongoDB Atlas
