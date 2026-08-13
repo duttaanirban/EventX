@@ -13,11 +13,26 @@ import { swaggerSpec } from './config/swagger.js';
 
 configurePassport();
 
+const allowedOrigins = new Set([
+  env.clientUrl,
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  'http://localhost:4173',
+  'http://127.0.0.1:4173'
+]);
+
 const app = express();
+app.set('trust proxy', 1);
 
 app.use(
   cors({
-    origin: env.clientUrl,
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.has(origin)) {
+        callback(null, true);
+        return;
+      }
+      callback(new Error(`Not allowed by CORS: ${origin}`));
+    },
     credentials: true
   })
 );

@@ -11,6 +11,8 @@ services:
         value: production
       - key: PORT
         value: 5000
+      - key: API_URL
+        sync: false
       - key: CLIENT_URL
         sync: false
       - key: MONGO_URI
@@ -30,4 +32,10 @@ services:
       - key: RAZORPAY_KEY_SECRET
         sync: false
       - key: RAZORPAY_WEBHOOK_SECRET
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: GOOGLE_CALLBACK_URL
         sync: false

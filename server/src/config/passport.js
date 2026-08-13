@@ -4,15 +4,17 @@ import { env } from './env.js';
 import User from '../models/User.js';
 import { ApiError } from '../utils/ApiError.js';
 
+export const isGoogleOAuthConfigured = Boolean(env.googleClientId && env.googleClientSecret);
+
 export const configurePassport = () => {
-  if (!env.googleClientId || !env.googleClientSecret) return;
+  if (!isGoogleOAuthConfigured) return;
 
   passport.use(
     new GoogleStrategy(
       {
         clientID: env.googleClientId,
         clientSecret: env.googleClientSecret,
-        callbackURL: '/api/auth/google/callback'
+        callbackURL: env.googleCallbackUrl
       },
       async (_accessToken, _refreshToken, profile, done) => {
         try {

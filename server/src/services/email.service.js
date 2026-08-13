@@ -1,7 +1,9 @@
 import nodemailer from 'nodemailer';
 import { env } from '../config/env.js';
 
-const transporter = env.smtpHost
+const shouldSendEmail = env.nodeEnv !== 'test' && env.smtpHost;
+
+const transporter = shouldSendEmail
   ? nodemailer.createTransport({
       host: env.smtpHost,
       port: env.smtpPort,
@@ -12,7 +14,9 @@ const transporter = env.smtpHost
 
 const send = async ({ to, subject, html, attachments = [] }) => {
   if (!transporter) {
-    console.log(`Email skipped in development: ${subject} -> ${to}`);
+    if (env.nodeEnv !== 'test') {
+      console.log(`Email skipped in development: ${subject} -> ${to}`);
+    }
     return;
   }
   await transporter.sendMail({ from: env.mailFrom, to, subject, html, attachments });

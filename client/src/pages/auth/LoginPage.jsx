@@ -1,8 +1,10 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Chrome } from 'lucide-react';
+import toast from 'react-hot-toast';
 import { useAuth } from '../../context/AuthContext';
 import { authService } from '../../services/auth.service';
 import { Button } from '../../components/ui/Button';
@@ -20,12 +22,28 @@ export default function LoginPage() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting }
+    formState: { errors, isSubmitting },
+    setError
   } = useForm({ resolver: zodResolver(schema) });
 
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get('oauth') === 'failed') {
+      const message = 'Google sign-in could not be completed. Please try again.';
+      setError('root', { message });
+      toast.error(message);
+    }
+  }, [location.search, setError]);
+
   const onSubmit = async (values) => {
-    const user = await login(values);
-    navigate(location.state?.from?.pathname || (user.role === 'admin' ? '/admin' : user.role === 'organizer' ? '/organizer' : '/bookings'));
+    try {
+      const user = await login(values);
+      navigate(location.state?.from?.pathname || (user.role === 'admin' ? '/admin' : user.role === 'organizer' ? '/organizer' : '/bookings'));
+    } catch (error) {
+      const message = error.response?.data?.message || 'Unable to sign in. Please check your credentials and try again.';
+      setError('root', { message });
+      toast.error(message);
+    }
   };
 
   return (
@@ -36,6 +54,9 @@ export default function LoginPage() {
           <Input label="Email" type="email" {...register('email')} error={errors.email?.message} />
           <Input label="Password" type="password" {...register('password')} error={errors.password?.message} />
         </div>
+        {errors.root?.message ? (
+          <p className="mt-4 rounded-lg border border-berry/20 bg-berry/10 px-3 py-2 text-sm font-medium text-berry">{errors.root.message}</p>
+        ) : null}
         <Button className="mt-6 w-full" variant="accent" isLoading={isSubmitting}>
           Sign in
         </Button>

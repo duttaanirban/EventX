@@ -16,14 +16,20 @@ export const createRazorpayOrder = ({ amount, receipt }) =>
   });
 
 export const verifyPaymentSignature = ({ orderId, paymentId, signature }) => {
+  const secret = process.env.RAZORPAY_KEY_SECRET || env.razorpayKeySecret;
   const expected = crypto
-    .createHmac('sha256', env.razorpayKeySecret)
+    .createHmac('sha256', secret)
     .update(`${orderId}|${paymentId}`)
     .digest('hex');
+
+  if (expected.length !== signature.length) return false;
   return crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(signature));
 };
 
 export const verifyWebhookSignature = (body, signature) => {
-  const expected = crypto.createHmac('sha256', env.razorpayWebhookSecret).update(body).digest('hex');
+  const secret = process.env.RAZORPAY_WEBHOOK_SECRET || env.razorpayWebhookSecret;
+  const expected = crypto.createHmac('sha256', secret).update(body).digest('hex');
+
+  if (expected.length !== signature.length) return false;
   return crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(signature));
 };
