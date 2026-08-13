@@ -28,8 +28,14 @@ export default function LoginPage() {
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    if (params.get('oauth') === 'failed') {
-      const message = 'Google sign-in could not be completed. Please try again.';
+    const oauthStatus = params.get('oauth');
+    const oauthMessages = {
+      failed: 'Google sign-in could not be completed. Please try again.',
+      session_failed: 'Google sign-in succeeded, but the app could not load your account session.'
+    };
+
+    if (oauthMessages[oauthStatus]) {
+      const message = oauthMessages[oauthStatus];
       setError('root', { message });
       toast.error(message);
     }
