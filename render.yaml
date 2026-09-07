@@ -27,6 +27,8 @@ services:
         generateValue: true
       - key: QR_SECRET
         generateValue: true
+      - key: RESEND_API_KEY
+        sync: false
       - key: RAZORPAY_KEY_ID
         sync: false
       - key: RAZORPAY_KEY_SECRET

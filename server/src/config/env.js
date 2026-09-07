@@ -20,6 +20,7 @@ export const env = {
   razorpayKeyId: process.env.RAZORPAY_KEY_ID || 'rzp_test_key',
   razorpayKeySecret: process.env.RAZORPAY_KEY_SECRET || 'rzp_secret',
   razorpayWebhookSecret: process.env.RAZORPAY_WEBHOOK_SECRET || 'webhook-secret',
+  resendApiKey: process.env.RESEND_API_KEY,
   smtpHost: process.env.SMTP_HOST,
   smtpPort: Number(process.env.SMTP_PORT || 587),
   smtpUser: process.env.SMTP_USER,

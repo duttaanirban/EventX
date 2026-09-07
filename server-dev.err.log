@@ -19,3 +19,24 @@ Error: querySrv ETIMEOUT _mongodb._tcp.eventx.ech4oua.mongodb.net
   syscall: 'querySrv',
   hostname: '_mongodb._tcp.eventx.ech4oua.mongodb.net'
 }
+Error: querySrv ETIMEOUT _mongodb._tcp.eventx.ech4oua.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17) {
+  errno: undefined,
+  code: 'ETIMEOUT',
+  syscall: 'querySrv',
+  hostname: '_mongodb._tcp.eventx.ech4oua.mongodb.net'
+}
+Error: querySrv ETIMEOUT _mongodb._tcp.eventx.ech4oua.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17) {
+  errno: undefined,
+  code: 'ETIMEOUT',
+  syscall: 'querySrv',
+  hostname: '_mongodb._tcp.eventx.ech4oua.mongodb.net'
+}
+Error: querySrv ETIMEOUT _mongodb._tcp.eventx.ech4oua.mongodb.net
+    at QueryReqWrap.onresolve [as oncomplete] (node:internal/dns/promises:293:17) {
+  errno: undefined,
+  code: 'ETIMEOUT',
+  syscall: 'querySrv',
+  hostname: '_mongodb._tcp.eventx.ech4oua.mongodb.net'
+}
