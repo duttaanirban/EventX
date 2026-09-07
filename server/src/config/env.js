@@ -11,6 +11,8 @@ export const env = {
     process.env.RENDER_EXTERNAL_URL ||
     `http://localhost:${process.env.PORT || 5000}`,
   mongoUri: process.env.MONGO_URI || 'mongodb://localhost:27017/eventx',
+  redisUrl: process.env.REDIS_URL,
+  cacheTtlSeconds: Number(process.env.CACHE_TTL_SECONDS || 15),
   clientUrl: process.env.CLIENT_URL || 'http://localhost:5173',
   jwtAccessSecret: process.env.JWT_ACCESS_SECRET || 'dev-access-secret',
   jwtRefreshSecret: process.env.JWT_REFRESH_SECRET || 'dev-refresh-secret',

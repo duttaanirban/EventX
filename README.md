@@ -19,7 +19,7 @@ EventX is a production-style smart event ticketing platform with Razorpay paymen
 
 Frontend: React, Vite, Tailwind CSS, React Router, Axios, React Query, Recharts, Framer Motion, React Hook Form, Zod, html5-qrcode, Socket.io client.
 
-Backend: Node.js, Express, MongoDB, Mongoose, JWT, bcrypt, Passport Google OAuth, Razorpay, qrcode, Nodemailer, Socket.io, Swagger, Jest, Supertest.
+Backend: Node.js, Express, MongoDB, Mongoose, Redis, JWT, bcrypt, Passport Google OAuth, Razorpay, qrcode, Nodemailer, Socket.io, Swagger, Jest, Supertest.
 
 DevOps: Docker, Docker Compose, GitHub Actions, Vercel, Render, MongoDB Atlas.
 
@@ -72,6 +72,8 @@ Backend minimum for local development:
 NODE_ENV=development
 PORT=5000
 MONGO_URI=mongodb://localhost:27017/eventx
+REDIS_URL=redis://localhost:6379
+CACHE_TTL_SECONDS=15
 CLIENT_URL=http://localhost:5173
 JWT_ACCESS_SECRET=replace-with-long-random-secret
 JWT_REFRESH_SECRET=replace-with-long-random-secret
@@ -106,7 +108,7 @@ https://your-api-domain.com/api/payments/webhook
 Local MongoDB:
 
 ```bash
-docker compose up mongo
+docker compose up mongo redis
 ```
 
 MongoDB Atlas:
@@ -158,6 +160,7 @@ Services:
 - Backend: `http://localhost:5000`
 - API docs: `http://localhost:5000/api/docs`
 - MongoDB: `localhost:27017`
+- Redis: `localhost:6379`
 
 ## API Documentation
 
@@ -246,6 +249,7 @@ Set `MONGO_URI` on Render to your Atlas connection string. Use a production data
 ## Production Checklist
 
 - [ ] Configure MongoDB Atlas
+- [ ] Configure a Redis instance and set `REDIS_URL`
 - [ ] Configure Razorpay test/live credentials
 - [ ] Configure SMTP provider
 - [ ] Configure Google OAuth callback URL

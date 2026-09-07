@@ -7,6 +7,12 @@ services:
     volumes:
       - mongo-data:/data/db
 
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
   server:
     build:
       context: .
@@ -17,8 +23,10 @@ services:
       - "5000:5000"
     depends_on:
       - mongo
+      - redis
     environment:
       MONGO_URI: mongodb://mongo:27017/eventx
+      REDIS_URL: redis://redis:6379
 
   client:
     build:

@@ -14,6 +14,7 @@ import {
 import { emailService } from '../services/email.service.js';
 import { getIo } from '../socket/index.js';
 import { env } from '../config/env.js';
+import { invalidateEventCaches } from '../services/cache.service.js';
 
 export const createOrder = asyncHandler(async (req, res) => {
   const { eventId, ticketCount } = req.body;
@@ -159,6 +160,7 @@ export const verifyPayment = asyncHandler(async (req, res) => {
   }
 
   booking = await Booking.findById(booking._id).populate('user').populate('event');
+  await invalidateEventCaches(booking.event._id);
   await emailService.sendBookingConfirmation({
     user: booking.user,
     event: booking.event,
@@ -202,6 +204,7 @@ export const paymentWebhook = asyncHandler(async (req, res) => {
 
       if (booking) {
         const populated = await Booking.findById(booking._id).populate('user').populate('event');
+        await invalidateEventCaches(populated.event._id);
         await emailService.sendBookingConfirmation({
           user: populated.user,
           event: populated.event,
