@@ -8,20 +8,22 @@ const EVENT_AVAILABILITY_TTL_SECONDS = env.cacheTtlSeconds;
 
 let client;
 let connectionPromise;
+let redisUnavailableUntil = 0;
 
 const getClient = async () => {
   if (!env.redisUrl) return null;
+  if (Date.now() < redisUnavailableUntil) return null;
 
   if (!client) {
-    client = createClient({ url: env.redisUrl });
-    client.on('error', (error) => console.error('Redis cache error', error.message));
+    client = createClient({ url: env.redisUrl, socket: { reconnectStrategy: false } });
+    client.on('error', () => {});
   }
 
   if (client.isOpen) return client;
   if (!connectionPromise) {
-    connectionPromise = client.connect().catch((error) => {
+    connectionPromise = client.connect().catch(() => {
       connectionPromise = null;
-      console.error('Redis cache unavailable', error.message);
+      redisUnavailableUntil = Date.now() + 30_000;
       return null;
     });
   }
@@ -35,8 +37,7 @@ const readJson = async (key) => {
     if (!redis) return null;
     const value = await redis.get(key);
     return value ? JSON.parse(value) : null;
-  } catch (error) {
-    console.error('Redis cache read failed', error.message);
+  } catch {
     return null;
   }
 };
@@ -45,8 +46,8 @@ const writeJson = async (key, value, ttlSeconds) => {
   try {
     const redis = await getClient();
     if (redis) await redis.set(key, JSON.stringify(value), { EX: ttlSeconds });
-  } catch (error) {
-    console.error('Redis cache write failed', error.message);
+  } catch {
+    return undefined;
   }
 };
 
@@ -54,8 +55,8 @@ const deleteKey = async (key) => {
   try {
     const redis = await getClient();
     if (redis) await redis.del(key);
-  } catch (error) {
-    console.error('Redis cache delete failed', error.message);
+  } catch {
+    return undefined;
   }
 };
 
@@ -63,8 +64,7 @@ const increment = async (key) => {
   try {
     const redis = await getClient();
     return redis ? await redis.incr(key) : null;
-  } catch (error) {
-    console.error('Redis cache increment failed', error.message);
+  } catch {
     return null;
   }
 };

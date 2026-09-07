@@ -84,6 +84,7 @@ async function confirmBookingFromPayment({
   razorpaySignature
 }) {
   let booking;
+  let confirmed = false;
 
   await withTransactionRetry(session, async () => {
     const payment = await Payment.findOne({ razorpayOrderId }).session(session);
@@ -132,9 +133,10 @@ async function confirmBookingFromPayment({
 
     booking.paymentId = payment._id;
     await booking.save({ session });
+    confirmed = true;
   });
 
-  return booking;
+  return { booking, confirmed };
 }
 
 export const verifyPayment = asyncHandler(async (req, res) => {
@@ -147,9 +149,9 @@ export const verifyPayment = asyncHandler(async (req, res) => {
   if (!isValid) throw new ApiError(400, 'Payment signature mismatch');
 
   const session = await mongoose.startSession();
-  let booking;
+  let confirmation;
   try {
-    booking = await confirmBookingFromPayment({
+    confirmation = await confirmBookingFromPayment({
       session,
       razorpayOrderId: razorpay_order_id,
       razorpayPaymentId: razorpay_payment_id,
@@ -159,17 +161,19 @@ export const verifyPayment = asyncHandler(async (req, res) => {
     session.endSession();
   }
 
-  booking = await Booking.findById(booking._id).populate('user').populate('event');
-  await invalidateEventCaches(booking.event._id);
-  await emailService.sendBookingConfirmation({
-    user: booking.user,
-    event: booking.event,
-    booking
-  });
-  getIo()?.to(`event:${booking.event._id}`).emit('availability-updated', {
-    eventId: booking.event._id,
-    availableSeats: booking.event.availableSeats
-  });
+  const booking = await Booking.findById(confirmation.booking._id).populate('user').populate('event');
+  if (confirmation.confirmed) {
+    await invalidateEventCaches(booking.event._id);
+    await emailService.sendBookingConfirmation({
+      user: booking.user,
+      event: booking.event,
+      booking
+    });
+    getIo()?.to(`event:${booking.event._id}`).emit('availability-updated', {
+      eventId: booking.event._id,
+      availableSeats: booking.event.availableSeats
+    });
+  }
   res.json({ success: true, data: { booking } });
 });
 
@@ -195,15 +199,15 @@ export const paymentWebhook = asyncHandler(async (req, res) => {
     // no-ops on already-paid payments.
     const session = await mongoose.startSession();
     try {
-      const booking = await confirmBookingFromPayment({
+      const confirmation = await confirmBookingFromPayment({
         session,
         razorpayOrderId: entity.order_id,
         razorpayPaymentId: entity.id,
         razorpaySignature: null // no client signature available on webhook path
       });
 
-      if (booking) {
-        const populated = await Booking.findById(booking._id).populate('user').populate('event');
+      if (confirmation.confirmed) {
+        const populated = await Booking.findById(confirmation.booking._id).populate('user').populate('event');
         await invalidateEventCaches(populated.event._id);
         await emailService.sendBookingConfirmation({
           user: populated.user,
@@ -216,12 +220,18 @@ export const paymentWebhook = asyncHandler(async (req, res) => {
         });
       }
     } catch (error) {
-      // Log but still return 200 — Razorpay retries on non-2xx, and if this
-      // failed due to sold-out seats there's nothing a retry can fix.
       console.error('Webhook booking confirmation failed', {
         orderId: entity.order_id,
         message: error?.message
       });
+      if (error.statusCode === 409) {
+        await Payment.findOneAndUpdate(
+          { razorpayOrderId: entity.order_id, paymentStatus: { $ne: 'paid' } },
+          { paymentStatus: 'failed', failureReason: error.message }
+        );
+      } else {
+        throw error;
+      }
     } finally {
       session.endSession();
     }
