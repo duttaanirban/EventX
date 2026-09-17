@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { SealCheck, QrCode, ShieldCheck } from '@phosphor-icons/react';
+import { ArrowRight, SealCheck, QrCode, ShieldCheck } from '@phosphor-icons/react';
 import { eventsService } from '../services/events.service';
 import { EventCard } from '../components/events/EventCard';
 import { HeroSection } from '../components/home/HeroSection';
@@ -13,7 +13,7 @@ const benefits = [
 ];
 
 export default function LandingPage() {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ['featured-events'],
     queryFn: () => eventsService.list({ limit: 3, sort: 'date' })
   });
@@ -22,22 +22,25 @@ export default function LandingPage() {
     <main>
       <HeroSection />
 
-      <section className="bg-white py-16 dark:bg-white/[0.03]">
+      <section aria-labelledby="upcoming-events-heading" className="border-t border-white/[0.06] bg-[#080d14] py-10 text-white sm:py-12">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
             <div>
-              <h2 className="text-3xl font-black">Featured events</h2>
-              <p className="mt-2 text-slate-600 dark:text-slate-300">Discover what is selling now.</p>
+              <h2 id="upcoming-events-heading" className="text-2xl font-bold">Upcoming Events</h2>
+              <p className="mt-2 text-sm leading-6 text-slate-400">Discover and be part of amazing events around you.</p>
             </div>
-            <Link to="/events" className="text-sm font-bold text-brand-700 dark:text-brand-100">
+            <Link to="/events" className="focus-ring inline-flex w-fit shrink-0 items-center gap-2 rounded-md py-2 text-sm font-semibold text-teal-300 transition-colors hover:text-teal-200">
               View all events
+              <ArrowRight weight="bold" aria-hidden="true" className="h-4 w-4" />
             </Link>
           </div>
-          <div className="mt-8 grid gap-5 md:grid-cols-3">
+          <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {isLoading
               ? Array.from({ length: 3 }).map((_, index) => <Skeleton key={index} className="h-80" />)
-              : data?.events?.map((event) => <EventCard key={event._id} event={event} />)}
+              : data?.events?.map((event) => <EventCard key={event._id} event={event} variant="featured" />)}
           </div>
+          {!isLoading && isError ? <p role="alert" className="py-6 text-sm text-slate-400">Unable to load events. Please try again later.</p> : null}
+          {!isLoading && !isError && !data?.events?.length ? <p role="status" className="py-6 text-sm text-slate-400">No upcoming events available right now.</p> : null}
         </div>
       </section>
 
