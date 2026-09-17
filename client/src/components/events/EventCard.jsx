@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { CalendarDays, MapPin } from 'lucide-react';
+import { CalendarDots, MapPin } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { formatCurrency } from '../../utils/currency';
 import { formatDate } from '../../utils/date';
@@ -23,11 +23,11 @@ export function EventCard({ event }) {
           <h3 className="mt-3 line-clamp-2 text-lg font-bold">{event.title}</h3>
           <div className="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300">
             <p className="flex items-center gap-2">
-              <CalendarDays className="h-4 w-4 text-brand-600" />
+              <CalendarDots weight="regular" aria-hidden="true" className="h-4 w-4 text-brand-600" />
               {formatDate(event.date)} at {event.time}
             </p>
             <p className="flex items-center gap-2">
-              <MapPin className="h-4 w-4 text-ember" />
+              <MapPin weight="regular" aria-hidden="true" className="h-4 w-4 text-ember" />
               {event.venue}, {event.city}
             </p>
           </div>

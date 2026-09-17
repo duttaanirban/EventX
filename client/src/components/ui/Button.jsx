@@ -1,4 +1,4 @@
-import { Loader2 } from 'lucide-react';
+import { SpinnerGap } from '@phosphor-icons/react';
 import { clsx } from 'clsx';
 
 const variants = {
@@ -27,7 +27,7 @@ export function Button({ children, variant = 'primary', size = 'default', classN
       disabled={disabled || isLoading}
       {...props}
     >
-      {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+      {isLoading ? <SpinnerGap weight="regular" aria-hidden="true" className="h-4 w-4 animate-spin" /> : null}
       {children}
     </button>
   );

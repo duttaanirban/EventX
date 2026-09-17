@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { BadgeCheck, QrCode, ShieldCheck } from 'lucide-react';
+import { SealCheck, QrCode, ShieldCheck } from '@phosphor-icons/react';
 import { eventsService } from '../services/events.service';
 import { EventCard } from '../components/events/EventCard';
 import { HeroSection } from '../components/home/HeroSection';
@@ -9,7 +9,7 @@ import { Skeleton } from '../components/ui/Skeleton';
 const benefits = [
   { icon: ShieldCheck, title: 'Secure payments', copy: 'Razorpay verification, webhooks, refunds, and audit-friendly payment records.' },
   { icon: QrCode, title: 'Fast check-in', copy: 'Encrypted QR tickets prevent duplicate scans and sync attendance in real time.' },
-  { icon: BadgeCheck, title: 'Role-aware SaaS', copy: 'Focused workflows for attendees, organizers, and platform admins.' }
+  { icon: SealCheck, title: 'Role-aware SaaS', copy: 'Focused workflows for attendees, organizers, and platform admins.' }
 ];
 
 export default function LandingPage() {
@@ -44,7 +44,7 @@ export default function LandingPage() {
       <section className="mx-auto grid max-w-7xl gap-5 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
         {benefits.map((item) => (
           <div key={item.title} className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-white/10 dark:bg-white/5">
-            <item.icon className="h-8 w-8 text-brand-600" />
+            <item.icon weight="regular" aria-hidden="true" className="h-8 w-8 text-brand-600" />
             <h3 className="mt-4 text-lg font-bold">{item.title}</h3>
             <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">{item.copy}</p>
           </div>

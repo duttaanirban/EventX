@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, CreditCard, QrCode, Sparkles, Ticket, Users } from 'lucide-react';
+import { ArrowRight, CreditCard, QrCode, Lightning, Ticket, Users } from '@phosphor-icons/react';
 import { useAuth } from '../../context/AuthContext';
 import { Button } from '../ui/Button';
 import { HeroFeature } from './HeroFeature';
@@ -25,7 +25,7 @@ export function HeroSection() {
       <div className="relative mx-auto grid min-h-[calc(100dvh-4.5rem-1px)] max-w-7xl items-center gap-8 px-4 py-10 sm:px-6 sm:py-12 lg:grid-cols-2 lg:gap-6 lg:px-8 lg:py-12">
         <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55 }}>
           <span className="inline-flex items-center gap-2 rounded-full border border-teal-400/20 bg-teal-400/10 px-3 py-1.5 text-sm font-semibold text-teal-200">
-            <Sparkles className="h-4 w-4" />
+            <Lightning weight="regular" aria-hidden="true" className="h-4 w-4" />
             Smarter Event Experiences
           </span>
           <h1 className="mt-6 max-w-3xl text-4xl font-black leading-[1.08] tracking-normal text-white sm:text-5xl lg:text-6xl xl:text-7xl">
@@ -39,7 +39,7 @@ export function HeroSection() {
             <Link to="/events">
               <Button variant="accent" className="w-full sm:w-auto">
                 Browse Events
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight weight="bold" aria-hidden="true" className="h-4 w-4" />
               </Button>
             </Link>
             <Link to={createEventPath}>

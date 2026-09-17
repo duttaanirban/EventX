@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import { useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
-import { CheckCircle2, ScanLine } from 'lucide-react';
+import { CheckCircle, Scan } from '@phosphor-icons/react';
 import { qrService } from '../../services/qr.service';
 import { getSocket } from '../../services/socket';
 import { Button } from '../ui/Button';
@@ -66,7 +66,7 @@ export function QrScannerPanel() {
             <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">Scan attendee tickets and prevent duplicate entry.</p>
           </div>
           <Button variant="accent" onClick={() => setIsScannerOpen((value) => !value)}>
-            <ScanLine className="h-4 w-4" />
+            <Scan weight="regular" aria-hidden="true" className="h-4 w-4" />
             {isScannerOpen ? 'Stop scanner' : 'Start scanner'}
           </Button>
         </div>
@@ -76,7 +76,7 @@ export function QrScannerPanel() {
           ) : (
             <div className="grid min-h-80 place-items-center text-center text-slate-500">
               <div>
-                <ScanLine className="mx-auto h-12 w-12" />
+                <Scan weight="regular" aria-hidden="true" className="mx-auto h-12 w-12" />
                 <p className="mt-3 text-sm font-semibold">Camera scanner is paused</p>
               </div>
             </div>
@@ -99,7 +99,7 @@ export function QrScannerPanel() {
         </form>
         {lastCheckin ? (
           <div className="mt-5 rounded-lg bg-brand-50 p-4 text-brand-800 dark:bg-brand-500/10 dark:text-brand-100">
-            <CheckCircle2 className="h-6 w-6" />
+            <CheckCircle weight="regular" aria-hidden="true" className="h-6 w-6" />
             <p className="mt-2 font-black">{lastCheckin.user?.name}</p>
             <p className="text-sm opacity-80">{lastCheckin.event?.title}</p>
           </div>

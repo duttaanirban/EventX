@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { Minus, Plus, ShieldCheck, Ticket } from 'lucide-react';
+import { Minus, Plus, ShieldCheck, Ticket } from '@phosphor-icons/react';
 import { bookingsService } from '../../services/bookings.service';
 import { paymentsService } from '../../services/payments.service';
 import { useAuth } from '../../context/AuthContext';
@@ -81,7 +81,7 @@ export function BookingPanel({ event }) {
               disabled={ticketCount <= 1 || isCheckingOut}
               aria-label="Decrease ticket count"
             >
-              <Minus className="h-4 w-4" />
+              <Minus weight="regular" aria-hidden="true" className="h-4 w-4" />
             </button>
             <span className="grid h-9 w-10 place-items-center rounded-lg text-sm font-black">{ticketCount}</span>
             <button
@@ -90,7 +90,7 @@ export function BookingPanel({ event }) {
               disabled={ticketCount >= maxTickets || isCheckingOut}
               aria-label="Increase ticket count"
             >
-              <Plus className="h-4 w-4" />
+              <Plus weight="regular" aria-hidden="true" className="h-4 w-4" />
             </button>
           </div>
         </div>
@@ -101,11 +101,11 @@ export function BookingPanel({ event }) {
       </div>
       <div className="mt-4 space-y-2 text-sm text-slate-600 dark:text-slate-300">
         <p className="flex items-center gap-2">
-          <Ticket className="h-4 w-4 text-brand-600" />
+          <Ticket weight="regular" aria-hidden="true" className="h-4 w-4 text-brand-600" />
           {event.availableSeats} seats available
         </p>
         <p className="flex items-center gap-2">
-          <ShieldCheck className="h-4 w-4 text-brand-600" />
+          <ShieldCheck weight="regular" aria-hidden="true" className="h-4 w-4 text-brand-600" />
           Razorpay secured checkout
         </p>
       </div>

@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { CalendarDays, MapPin, Ticket } from 'lucide-react';
+import { CalendarDots, MapPin, Ticket } from '@phosphor-icons/react';
 import { eventsService } from '../services/events.service';
 import { Skeleton } from '../components/ui/Skeleton';
 import { formatDate } from '../utils/date';
@@ -60,15 +60,15 @@ export default function EventDetailPage() {
           <p className="mt-4 leading-8 text-slate-600 dark:text-slate-300">{event.description}</p>
           <div className="mt-8 grid gap-4 sm:grid-cols-3">
             <p className="flex items-center gap-3 rounded-lg bg-white p-4 shadow-sm dark:bg-white/5">
-              <CalendarDays className="h-5 w-5 text-brand-600" />
+              <CalendarDots weight="regular" aria-hidden="true" className="h-5 w-5 text-brand-600" />
               {formatDate(event.date)}<br />{event.time}
             </p>
             <p className="flex items-center gap-3 rounded-lg bg-white p-4 shadow-sm dark:bg-white/5">
-              <MapPin className="h-5 w-5 text-ember" />
+              <MapPin weight="regular" aria-hidden="true" className="h-5 w-5 text-ember" />
               {event.venue}<br />{event.city}
             </p>
             <p className="flex items-center gap-3 rounded-lg bg-white p-4 shadow-sm dark:bg-white/5">
-              <Ticket className="h-5 w-5 text-berry" />
+              <Ticket weight="regular" aria-hidden="true" className="h-5 w-5 text-berry" />
               {event.availableSeats}<br />seats left
             </p>
           </div>

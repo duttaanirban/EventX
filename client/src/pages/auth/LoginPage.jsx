@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Chrome } from 'lucide-react';
+import { GoogleLogo } from '@phosphor-icons/react';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../context/AuthContext';
 import { authService } from '../../services/auth.service';
@@ -67,7 +67,7 @@ export default function LoginPage() {
           Sign in
         </Button>
         <a href={authService.googleUrl} className="mt-3 flex h-11 items-center justify-center gap-2 rounded-lg border border-slate-200 text-sm font-semibold dark:border-white/10">
-          <Chrome className="h-4 w-4" />
+          <GoogleLogo weight="regular" aria-hidden="true" className="h-4 w-4" />
           Continue with Google
         </a>
         <div className="mt-5 flex justify-between text-sm">

@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { BarChart3, CalendarPlus, QrCode } from 'lucide-react';
+import { ChartBar, CalendarPlus, QrCode } from '@phosphor-icons/react';
 import { Tabs } from '../../components/dashboard/Tabs';
 import { EventManager } from '../../components/organizer/EventManager';
 import { OrganizerAnalytics } from '../../components/organizer/OrganizerAnalytics';
 import { QrScannerPanel } from '../../components/organizer/QrScannerPanel';
 
 const tabs = [
-  { id: 'analytics', label: 'Analytics', icon: BarChart3 },
+  { id: 'analytics', label: 'Analytics', icon: ChartBar },
   { id: 'events', label: 'Events', icon: CalendarPlus },
   { id: 'scanner', label: 'Scanner', icon: QrCode }
 ];

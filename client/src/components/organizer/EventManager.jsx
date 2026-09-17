@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
-import { Edit, Plus, Trash2, Users } from 'lucide-react';
+import { PencilSimple, Plus, Trash, Users } from '@phosphor-icons/react';
 import { eventsService } from '../../services/events.service';
 import { bookingsService } from '../../services/bookings.service';
 import { formatCurrency } from '../../utils/currency';
@@ -59,7 +59,7 @@ export function EventManager() {
           <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">Create, update, and monitor your event inventory.</p>
         </div>
         <Button variant="accent" onClick={() => setIsCreating(true)}>
-          <Plus className="h-4 w-4" />
+          <Plus weight="regular" aria-hidden="true" className="h-4 w-4" />
           New event
         </Button>
       </div>
@@ -95,15 +95,15 @@ export function EventManager() {
               </div>
               <div className="flex flex-wrap gap-2 md:justify-end">
                 <Button variant="ghost" onClick={() => setAttendeeEvent(event)}>
-                  <Users className="h-4 w-4" />
+                  <Users weight="regular" aria-hidden="true" className="h-4 w-4" />
                   Attendees
                 </Button>
                 <Button variant="ghost" onClick={() => setEditingEvent(event)}>
-                  <Edit className="h-4 w-4" />
+                  <PencilSimple weight="regular" aria-hidden="true" className="h-4 w-4" />
                   Edit
                 </Button>
                 <Button variant="danger" onClick={() => deleteMutation.mutate(event._id)} isLoading={deleteMutation.isPending}>
-                  <Trash2 className="h-4 w-4" />
+                  <Trash weight="regular" aria-hidden="true" className="h-4 w-4" />
                   Delete
                 </Button>
               </div>

@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
-import { Ban, ShieldCheck, UserCog } from 'lucide-react';
+import { Prohibit, ShieldCheck, UserGear } from '@phosphor-icons/react';
 import { analyticsService } from '../../services/analytics.service';
 import { formatDate } from '../../utils/date';
 import { Button } from '../ui/Button';
@@ -98,7 +98,7 @@ export function UserManagement() {
                         onClick={() => updateMutation.mutate({ id: user._id, payload: { isBanned: !user.isBanned } })}
                         isLoading={updateMutation.isPending}
                       >
-                        {user.isBanned ? <ShieldCheck className="h-4 w-4" /> : <Ban className="h-4 w-4" />}
+                        {user.isBanned ? <ShieldCheck weight="regular" aria-hidden="true" className="h-4 w-4" /> : <Prohibit weight="regular" aria-hidden="true" className="h-4 w-4" />}
                         {user.isBanned ? 'Restore' : 'Ban'}
                       </Button>
                     </div>
@@ -109,7 +109,7 @@ export function UserManagement() {
           </table>
           {!filteredUsers.length ? (
             <div className="py-10 text-center text-sm text-slate-500">
-              <UserCog className="mx-auto mb-2 h-8 w-8" />
+              <UserGear weight="regular" aria-hidden="true" className="mx-auto mb-2 h-8 w-8" />
               No accounts match your filters.
             </div>
           ) : null}

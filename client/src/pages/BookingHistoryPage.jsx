@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { Download, QrCode } from 'lucide-react';
+import { DownloadSimple, QrCode } from '@phosphor-icons/react';
 import { bookingsService } from '../services/bookings.service';
 import { EmptyState } from '../components/ui/EmptyState';
 import { Skeleton } from '../components/ui/Skeleton';
@@ -33,7 +33,7 @@ export default function BookingHistoryPage() {
               <p className="mt-2 text-sm font-semibold text-brand-700 dark:text-brand-100">{booking.checkedIn ? 'Checked in' : booking.bookingStatus}</p>
               {booking.qrCode ? (
                 <Button variant="ghost" className="mt-4" onClick={() => downloadQr(booking)}>
-                  <Download className="h-4 w-4" />
+                  <DownloadSimple weight="regular" aria-hidden="true" className="h-4 w-4" />
                   Download QR
                 </Button>
               ) : null}
@@ -42,7 +42,7 @@ export default function BookingHistoryPage() {
               <img src={booking.qrCode} alt={`QR ticket for ${booking.event?.title}`} className="h-32 w-32 rounded-lg bg-white p-2" />
             ) : (
               <div className="grid h-32 w-32 place-items-center rounded-lg bg-slate-100 text-slate-400 dark:bg-white/10">
-                <QrCode className="h-8 w-8" />
+                <QrCode weight="regular" aria-hidden="true" className="h-8 w-8" />
               </div>
             )}
           </article>

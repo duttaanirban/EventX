@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { CalendarDays, LayoutDashboard, LogOut, Menu, Moon, Search, Sun, X } from 'lucide-react';
+import { CalendarDots, SquaresFour, SignOut, List, Moon, MagnifyingGlass, Sun, X } from '@phosphor-icons/react';
 import { Button } from '../ui/Button';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../hooks/useTheme';
@@ -43,7 +43,7 @@ export function PublicNavbar() {
       <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
         <Link to="/" className="focus-ring flex shrink-0 items-center gap-2.5 rounded-lg" aria-label="EventX home">
           <span className="grid h-10 w-10 place-items-center rounded-xl bg-teal-500 text-[#041311] shadow-[0_0_24px_rgba(20,184,166,0.3)]">
-            <CalendarDays className="h-5 w-5" strokeWidth={2.25} />
+            <CalendarDots weight="regular" aria-hidden="true" className="h-5 w-5" />
           </span>
           <span className="text-xl font-black tracking-normal">EventX</span>
         </Link>
@@ -58,7 +58,7 @@ export function PublicNavbar() {
 
         <div className="ml-auto hidden items-center gap-2 lg:flex">
           <form onSubmit={handleSearch} className="relative hidden xl:block">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+            <MagnifyingGlass weight="regular" aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
             <label htmlFor="event-search" className="sr-only">Search events</label>
             <input
               id="event-search"
@@ -75,18 +75,18 @@ export function PublicNavbar() {
             onClick={toggleTheme}
             aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
           >
-            {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            {theme === 'dark' ? <Sun weight="regular" aria-hidden="true" className="h-5 w-5" /> : <Moon weight="regular" aria-hidden="true" className="h-5 w-5" />}
           </button>
           {user ? (
             <>
               <Link to={dashboardPath}>
                 <Button variant="nav" className="px-3">
-                  <LayoutDashboard className="h-4 w-4" />
+                  <SquaresFour weight="regular" aria-hidden="true" className="h-4 w-4" />
                   Dashboard
                 </Button>
               </Link>
               <Button variant="nav" className="w-10 px-0" onClick={logout} aria-label="Sign out">
-                <LogOut className="h-4 w-4" />
+                <SignOut weight="regular" aria-hidden="true" className="h-4 w-4" />
               </Button>
             </>
           ) : (
@@ -104,7 +104,7 @@ export function PublicNavbar() {
             onClick={toggleTheme}
             aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
           >
-            {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            {theme === 'dark' ? <Sun weight="regular" aria-hidden="true" className="h-5 w-5" /> : <Moon weight="regular" aria-hidden="true" className="h-5 w-5" />}
           </button>
           <button
             type="button"
@@ -114,7 +114,7 @@ export function PublicNavbar() {
             aria-controls="mobile-navigation"
             aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
           >
-            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {isMenuOpen ? <X weight="regular" aria-hidden="true" className="h-5 w-5" /> : <List weight="regular" aria-hidden="true" className="h-5 w-5" />}
           </button>
         </div>
       </div>
@@ -123,7 +123,7 @@ export function PublicNavbar() {
         <div id="mobile-navigation" className="border-t border-white/10 bg-[#070b12]/95 px-4 py-5 backdrop-blur-xl lg:hidden">
           <div className="mx-auto max-w-7xl">
             <form onSubmit={handleSearch} className="relative mb-4">
-              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+              <MagnifyingGlass weight="regular" aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
               <label htmlFor="mobile-event-search" className="sr-only">Search events</label>
               <input
                 id="mobile-event-search"
@@ -146,9 +146,9 @@ export function PublicNavbar() {
               {user ? (
                 <>
                   <Link to={dashboardPath} className="flex-1">
-                    <Button variant="outline" className="w-full"><LayoutDashboard className="h-4 w-4" />Dashboard</Button>
+                    <Button variant="outline" className="w-full"><SquaresFour weight="regular" aria-hidden="true" className="h-4 w-4" />Dashboard</Button>
                   </Link>
-                  <Button variant="nav" onClick={logout} aria-label="Sign out"><LogOut className="h-4 w-4" /></Button>
+                  <Button variant="nav" onClick={logout} aria-label="Sign out"><SignOut weight="regular" aria-hidden="true" className="h-4 w-4" /></Button>
                 </>
               ) : (
                 <>

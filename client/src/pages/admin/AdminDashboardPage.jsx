@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { BarChart3, CreditCard, Users } from 'lucide-react';
+import { ChartBar, CreditCard, Users } from '@phosphor-icons/react';
 import { Tabs } from '../../components/dashboard/Tabs';
 import { AdminAnalytics } from '../../components/admin/AdminAnalytics';
 import { UserManagement } from '../../components/admin/UserManagement';
 import { PaymentMonitoring } from '../../components/admin/PaymentMonitoring';
 
 const tabs = [
-  { id: 'analytics', label: 'Analytics', icon: BarChart3 },
+  { id: 'analytics', label: 'Analytics', icon: ChartBar },
   { id: 'users', label: 'Users', icon: Users },
   { id: 'payments', label: 'Payments', icon: CreditCard }
 ];

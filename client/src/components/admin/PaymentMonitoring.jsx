@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
-import { AlertTriangle, RotateCcw } from 'lucide-react';
+import { Warning, ArrowCounterClockwise } from '@phosphor-icons/react';
 import { analyticsService } from '../../services/analytics.service';
 import { paymentsService } from '../../services/payments.service';
 import { formatCurrency } from '../../utils/currency';
@@ -88,7 +88,7 @@ export function PaymentMonitoring() {
                     <td className="py-3 capitalize">{payment.paymentStatus}</td>
                     <td className="py-3">
                       <span className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-bold ${risk.className}`}>
-                        {risk.label !== 'Normal' ? <AlertTriangle className="h-3.5 w-3.5" /> : null}
+                        {risk.label !== 'Normal' ? <Warning weight="regular" aria-hidden="true" className="h-3.5 w-3.5" /> : null}
                         {risk.label}
                       </span>
                     </td>
@@ -99,7 +99,7 @@ export function PaymentMonitoring() {
                         isLoading={refundMutation.isPending}
                         onClick={() => refundMutation.mutate(payment._id)}
                       >
-                        <RotateCcw className="h-4 w-4" />
+                        <ArrowCounterClockwise weight="regular" aria-hidden="true" className="h-4 w-4" />
                         Refund
                       </Button>
                     </td>

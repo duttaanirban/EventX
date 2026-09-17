@@ -14,7 +14,7 @@ export function Tabs({ tabs, active, onChange }) {
           )}
           onClick={() => onChange(tab.id)}
         >
-          {tab.icon ? <tab.icon className="h-4 w-4" /> : null}
+          {tab.icon ? <tab.icon weight="duotone" aria-hidden="true" className="h-4 w-4" /> : null}
           {tab.label}
         </button>
       ))}

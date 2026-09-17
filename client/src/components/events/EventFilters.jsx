@@ -1,4 +1,4 @@
-import { Search } from 'lucide-react';
+import { MagnifyingGlass } from '@phosphor-icons/react';
 import { Input } from '../ui/Input';
 import { Select } from '../ui/Select';
 
@@ -8,7 +8,7 @@ export function EventFilters({ filters, setFilters }) {
   return (
     <div className="grid gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-white/5 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
       <div className="relative">
-        <Search className="pointer-events-none absolute left-3 top-3.5 h-4 w-4 text-slate-400" />
+        <MagnifyingGlass weight="regular" aria-hidden="true" className="pointer-events-none absolute left-3 top-3.5 h-4 w-4 text-slate-400" />
         <Input
           aria-label="Search events"
           placeholder="Search events"
