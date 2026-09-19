@@ -1,12 +1,14 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { GoogleLogo } from '@phosphor-icons/react';
+import { ArrowRight, Envelope, GoogleLogo } from '@phosphor-icons/react';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../context/AuthContext';
 import { authService } from '../../services/auth.service';
+import { AuthShell } from '../../components/auth/AuthShell';
+import { PasswordInput } from '../../components/auth/PasswordInput';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 
@@ -53,32 +55,73 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="mx-auto flex min-h-[calc(100vh-8rem)] max-w-md items-center px-4 py-10">
-      <form onSubmit={handleSubmit(onSubmit)} className="w-full rounded-lg border border-slate-200 bg-white p-6 shadow-soft dark:border-white/10 dark:bg-white/5">
-        <h1 className="text-2xl font-black">Sign in</h1>
-        <div className="mt-6 space-y-4">
-          <Input label="Email" type="email" {...register('email')} error={errors.email?.message} />
-          <Input label="Password" type="password" {...register('password')} error={errors.password?.message} />
+    <AuthShell standalone>
+      <header>
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-teal-300">EventX account</p>
+        <h1 className="mt-3 text-3xl font-bold tracking-normal">Welcome back</h1>
+        <p className="mt-2 text-sm leading-6 text-slate-400">Sign in to continue to EventX.</p>
+      </header>
+
+      <form onSubmit={handleSubmit(onSubmit)} className="mt-7" noValidate>
+        <div className="space-y-4">
+          <Input
+            label="Email"
+            type="email"
+            autoComplete="email"
+            placeholder="you@example.com"
+            icon={Envelope}
+            tone="dark"
+            {...register('email')}
+            error={errors.email?.message}
+          />
+          <div>
+            <PasswordInput
+              label="Password"
+              autoComplete="current-password"
+              placeholder="Enter your password"
+              {...register('password')}
+              error={errors.password?.message}
+            />
+            <div className="mt-2 text-right">
+              <Link className="focus-ring rounded text-xs font-semibold text-slate-400 transition hover:text-teal-200" to="/forgot-password">
+                Forgot password?
+              </Link>
+            </div>
+          </div>
         </div>
+
         {errors.root?.message ? (
-          <p className="mt-4 rounded-lg border border-berry/20 bg-berry/10 px-3 py-2 text-sm font-medium text-berry">{errors.root.message}</p>
+          <p role="alert" className="mt-4 rounded-xl border border-rose-400/20 bg-rose-950/25 px-3.5 py-3 text-sm font-medium text-rose-200">
+            {errors.root.message}
+          </p>
         ) : null}
-        <Button className="mt-6 w-full" variant="accent" isLoading={isSubmitting}>
+
+        <Button type="submit" className="mt-6 h-12 w-full rounded-xl" variant="accent" isLoading={isSubmitting}>
           Sign in
+          {!isSubmitting ? <ArrowRight weight="bold" aria-hidden="true" className="h-4 w-4" /> : null}
         </Button>
-        <a href={authService.googleUrl} className="mt-3 flex h-11 items-center justify-center gap-2 rounded-lg border border-slate-200 text-sm font-semibold dark:border-white/10">
-          <GoogleLogo weight="regular" aria-hidden="true" className="h-4 w-4" />
-          Continue with Google
-        </a>
-        <div className="mt-5 flex justify-between text-sm">
-          <Link className="font-semibold text-brand-700 dark:text-brand-100" to="/register">
-            Create account
-          </Link>
-          <Link className="font-semibold text-slate-500" to="/forgot-password">
-            Forgot password?
-          </Link>
-        </div>
       </form>
-    </main>
+
+      <div className="my-7 flex items-center gap-3" aria-hidden="true">
+        <span className="h-px flex-1 bg-white/[0.08]" />
+        <span className="text-xs font-medium text-slate-600">OR</span>
+        <span className="h-px flex-1 bg-white/[0.08]" />
+      </div>
+
+      <a
+        href={authService.googleUrl}
+        className="focus-ring flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.035] text-sm font-semibold text-slate-200 transition hover:border-teal-400/30 hover:bg-teal-400/[0.07] hover:text-white"
+      >
+        <GoogleLogo weight="bold" aria-hidden="true" className="h-5 w-5" />
+        Continue with Google
+      </a>
+
+      <p className="mt-6 text-center text-sm text-slate-400">
+        Don&apos;t have an account?{' '}
+        <Link className="focus-ring rounded font-semibold text-teal-300 transition hover:text-teal-200" to="/register">
+          Create one
+        </Link>
+      </p>
+    </AuthShell>
   );
 }

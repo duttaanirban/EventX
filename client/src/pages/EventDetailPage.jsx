@@ -108,7 +108,7 @@ export default function EventDetailPage() {
 
             <section className="mt-9" aria-labelledby="event-details">
               <h2 id="event-details" className="text-lg font-semibold">Event details</h2>
-              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              <div className="mt-3 grid gap-3 sm:grid-cols-2">
                 <EventInfoCard icon={CalendarDots} label="Date" value={formatDate(event.date)} detail={event.time} detailIcon={Clock} />
                 <EventInfoCard icon={MapPin} label="Location" value={event.venue} detail={event.city} />
                 <EventInfoCard icon={Users} label="Availability" value={`${event.availableSeats} seats available`} detail={`${event.totalSeats} total seats`} />
@@ -116,15 +116,15 @@ export default function EventDetailPage() {
               </div>
             </section>
 
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            <div className="mt-5 grid gap-3 sm:grid-cols-2">
               {event.organizer?.name ? (
-                <section className="rounded-xl border border-white/[0.08] bg-[#101720] p-5" aria-labelledby="event-host">
+                <section className="rounded-xl border border-white/[0.08] bg-[#101720] p-4" aria-labelledby="event-host">
                   <div className="flex items-center gap-3">
                     {event.organizer.avatar ? (
-                      <img src={event.organizer.avatar} alt="" className="h-11 w-11 rounded-full border border-white/10 object-cover" />
+                      <img src={event.organizer.avatar} alt="" className="h-10 w-10 rounded-full border border-white/10 object-cover" />
                     ) : (
-                      <span className="grid h-11 w-11 place-items-center rounded-full bg-teal-400/10 text-teal-300">
-                        <UserCircle weight="duotone" aria-hidden="true" className="h-6 w-6" />
+                      <span className="grid h-10 w-10 place-items-center rounded-full bg-teal-400/10 text-teal-300">
+                        <UserCircle weight="duotone" aria-hidden="true" className="h-5 w-5" />
                       </span>
                     )}
                     <div className="min-w-0">
@@ -136,10 +136,10 @@ export default function EventDetailPage() {
               ) : null}
 
               {event.venue || event.city ? (
-                <section className="rounded-xl border border-white/[0.08] bg-[#101720] p-5" aria-labelledby="event-venue">
+                <section className="rounded-xl border border-white/[0.08] bg-[#101720] p-4" aria-labelledby="event-venue">
                   <div className="flex items-start gap-3">
-                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-sky-400/10 text-sky-300">
-                      <Buildings weight="duotone" aria-hidden="true" className="h-6 w-6" />
+                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-sky-400/10 text-sky-300">
+                      <Buildings weight="duotone" aria-hidden="true" className="h-5 w-5" />
                     </span>
                     <div className="min-w-0">
                       <h2 id="event-venue" className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Venue</h2>
@@ -172,8 +172,8 @@ function EventInfoCard({ icon: Icon, label, value, detail, detailIcon: DetailIco
   if (!value) return null;
 
   return (
-    <article className="flex min-h-28 items-start gap-3 rounded-xl border border-white/[0.08] bg-[#101720] p-4">
-      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-teal-400/10 text-teal-300">
+    <article className="flex items-start gap-3 rounded-xl border border-white/[0.08] bg-[#101720] p-3.5">
+      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-teal-400/10 text-teal-300">
         <Icon weight="duotone" aria-hidden="true" className="h-5 w-5" />
       </span>
       <div className="min-w-0 pt-0.5">
@@ -201,7 +201,7 @@ function EventDetailSkeleton() {
             <Skeleton className="h-8 w-52 !bg-white/5" />
             <Skeleton className="mt-4 h-24 w-full !bg-white/5" />
             <div className="mt-9 grid gap-3 sm:grid-cols-2">
-              {Array.from({ length: 4 }).map((_, index) => <Skeleton key={index} className="h-28 !rounded-xl !bg-white/5" />)}
+              {Array.from({ length: 4 }).map((_, index) => <Skeleton key={index} className="h-24 !rounded-xl !bg-white/5" />)}
             </div>
           </div>
           <Skeleton className="h-[27rem] !rounded-2xl !bg-white/5" />

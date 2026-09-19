@@ -33,16 +33,16 @@ const withSuspense = (element) => (
 );
 
 export const router = createBrowserRouter([
+  { path: '/login', element: withSuspense(<LoginPage />) },
+  { path: '/register', element: withSuspense(<RegisterPage />) },
+  { path: '/forgot-password', element: withSuspense(<ForgotPasswordPage />) },
+  { path: '/reset-password', element: withSuspense(<ResetPasswordPage />) },
   {
     element: <PublicLayout />,
     children: [
       { path: '/', element: withSuspense(<LandingPage />) },
       { path: '/events', element: withSuspense(<EventsPage />) },
       { path: '/events/:id', element: withSuspense(<EventDetailPage />) },
-      { path: '/login', element: withSuspense(<LoginPage />) },
-      { path: '/register', element: withSuspense(<RegisterPage />) },
-      { path: '/forgot-password', element: withSuspense(<ForgotPasswordPage />) },
-      { path: '/reset-password', element: withSuspense(<ResetPasswordPage />) },
       { path: '/oauth/success', element: withSuspense(<OAuthSuccessPage />) },
       {
         element: <ProtectedRoute />,

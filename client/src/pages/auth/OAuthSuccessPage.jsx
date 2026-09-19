@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { SpinnerGap } from '@phosphor-icons/react';
 import { authService } from '../../services/auth.service';
-import { Skeleton } from '../../components/ui/Skeleton';
+import { AuthShell } from '../../components/auth/AuthShell';
 
 export default function OAuthSuccessPage() {
   const [params] = useSearchParams();
@@ -28,8 +29,12 @@ export default function OAuthSuccessPage() {
   }, [navigate, params]);
 
   return (
-    <main className="mx-auto max-w-md px-4 py-16">
-      <Skeleton className="h-16 w-full" />
-    </main>
+    <AuthShell>
+      <div className="py-6 text-center" role="status" aria-live="polite">
+        <SpinnerGap weight="regular" aria-hidden="true" className="mx-auto h-8 w-8 animate-spin text-teal-300" />
+        <h1 className="mt-5 text-2xl font-bold">Signing you in...</h1>
+        <p className="mt-2 text-sm text-slate-400">Securely loading your EventX account.</p>
+      </div>
+    </AuthShell>
   );
 }
