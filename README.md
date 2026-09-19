@@ -204,6 +204,49 @@ Backend tests use `mongodb-memory-server` with a workspace-local binary cache at
 
 ## Deployment
 
+### Browsing load test
+
+With Node.js 20 or newer, run from the repository root:
+
+```bash
+npm run test:load -- https://your-api.onrender.com
+```
+
+This read-only test warms up the API, then simulates 5, 10, 25, and 50 active
+users for 60 seconds per stage, alternating event listings and event details
+with three seconds of think time. Use a deployment you control, preferably
+staging with the same resources and representative data as production.
+It creates no accounts, bookings, or payments and does not simulate browser
+assets or Socket.io connections.
+
+Each stage reports throughput, p50/p95 response times, status counts, and
+errors. A complete stage passes if p95 is at most one second and errors are
+below 1%. Higher stages stop after a failure. Monitor API CPU/RAM and MongoDB
+metrics alongside the test; passing a short stage is not a capacity guarantee.
+
+The default total budget is 240 requests, including warm-up, because the API
+allows 300 requests per IP per 15 minutes. A budget stop or HTTP 429 makes the
+run incomplete, not a measured server capacity limit. Other traffic and earlier
+runs from the same public IP consume the same allowance. Allow that window to
+reset before repeating. The default budget will usually stop the test before
+all stages finish.
+
+For sustained measurement, first configure an appropriate rate limit on an
+isolated staging deployment. Then override the test settings in PowerShell:
+
+```powershell
+$env:LOAD_USERS = '5,10,25,50'
+$env:LOAD_SECONDS = '300'
+$env:LOAD_THINK_MS = '3000'
+$env:LOAD_MAX_REQUESTS = '12000'
+npm run test:load -- https://your-staging-api.onrender.com
+```
+
+These variables configure only the generator; they do not change the server's
+rate limit. Record the deployment resources and cache configuration with the
+results. Checkout capacity requires a separate test with payment test mode or
+a mock provider and booking correctness checks.
+
 ### Backend on Render
 
 Use `render.yaml` or create a Web Service manually.

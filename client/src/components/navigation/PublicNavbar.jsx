@@ -85,8 +85,16 @@ export function PublicNavbar() {
                   Dashboard
                 </Button>
               </Link>
-              <Button variant="nav" className="w-10 px-0" onClick={logout} aria-label="Sign out">
-                <SignOut weight="regular" aria-hidden="true" className="h-4 w-4" />
+              <Button
+                type="button"
+                variant="nav"
+                size="compact"
+                className="!h-10 !w-10 shrink-0 rounded-lg border border-white/10 bg-white/[0.04] !px-0 hover:border-teal-400/30 hover:bg-teal-400/10"
+                onClick={logout}
+                aria-label="Sign out"
+                title="Sign out"
+              >
+                <SignOut weight="regular" aria-hidden="true" className="h-5 w-5" />
               </Button>
             </>
           ) : (
@@ -148,7 +156,17 @@ export function PublicNavbar() {
                   <Link to={dashboardPath} className="flex-1">
                     <Button variant="outline" className="w-full"><SquaresFour weight="regular" aria-hidden="true" className="h-4 w-4" />Dashboard</Button>
                   </Link>
-                  <Button variant="nav" onClick={logout} aria-label="Sign out"><SignOut weight="regular" aria-hidden="true" className="h-4 w-4" /></Button>
+                  <Button
+                    type="button"
+                    variant="nav"
+                    size="compact"
+                    className="!h-10 !w-10 shrink-0 rounded-lg border border-white/10 bg-white/[0.04] !px-0 hover:border-teal-400/30 hover:bg-teal-400/10"
+                    onClick={logout}
+                    aria-label="Sign out"
+                    title="Sign out"
+                  >
+                    <SignOut weight="regular" aria-hidden="true" className="h-5 w-5" />
+                  </Button>
                 </>
               ) : (
                 <>
