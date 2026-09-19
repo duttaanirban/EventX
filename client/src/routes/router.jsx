@@ -38,6 +38,10 @@ export const router = createBrowserRouter([
   { path: '/forgot-password', element: withSuspense(<ForgotPasswordPage />) },
   { path: '/reset-password', element: withSuspense(<ResetPasswordPage />) },
   {
+    element: <ProtectedRoute roles={['organizer', 'admin']} />,
+    children: [{ path: '/organizer', element: withSuspense(<OrganizerDashboardPage />) }]
+  },
+  {
     element: <PublicLayout />,
     children: [
       { path: '/', element: withSuspense(<LandingPage />) },
@@ -47,10 +51,6 @@ export const router = createBrowserRouter([
       {
         element: <ProtectedRoute />,
         children: [{ path: '/bookings', element: withSuspense(<BookingHistoryPage />) }]
-      },
-      {
-        element: <ProtectedRoute roles={['organizer', 'admin']} />,
-        children: [{ path: '/organizer', element: withSuspense(<OrganizerDashboardPage />) }]
       },
       {
         element: <ProtectedRoute roles={['admin']} />,
