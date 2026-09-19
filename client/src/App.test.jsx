@@ -14,6 +14,6 @@ describe('App', () => {
         </AuthProvider>
       </QueryClientProvider>
     );
-    expect(await screen.findAllByText('EventX')).toHaveLength(1);
+    expect(await screen.findAllByText('EventX')).toHaveLength(2);
   });
 });

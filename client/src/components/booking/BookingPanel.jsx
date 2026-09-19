@@ -15,6 +15,10 @@ export function BookingPanel({ event }) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const maxTickets = Math.min(10, event.availableSeats);
+  const soldSeats = Math.max(event.totalSeats - event.availableSeats, 0);
+  const soldPercentage = event.totalSeats ? Math.min((soldSeats / event.totalSeats) * 100, 100) : 0;
+  const ticketPrice = event.ticketPrice ? formatCurrency(event.ticketPrice) : 'Free';
+  const totalPrice = event.ticketPrice ? formatCurrency(event.ticketPrice * ticketCount) : 'Free';
 
   const changeCount = (nextValue) => {
     setTicketCount(Math.max(1, Math.min(maxTickets || 1, nextValue)));
@@ -68,50 +72,91 @@ export function BookingPanel({ event }) {
   };
 
   return (
-    <aside className="h-max rounded-lg border border-slate-200 bg-white p-5 shadow-soft dark:border-white/10 dark:bg-white/5">
-      <p className="text-sm font-semibold text-slate-500">Ticket price</p>
-      <p className="mt-1 text-3xl font-black">{formatCurrency(event.ticketPrice)}</p>
-      <div className="mt-5 rounded-lg bg-slate-50 p-4 dark:bg-white/5">
-        <div className="flex items-center justify-between">
-          <span className="text-sm font-semibold">Tickets</span>
-          <div className="flex items-center gap-2">
+    <aside className="h-max rounded-2xl border border-white/10 bg-[#111a24] p-5 shadow-[0_20px_50px_rgba(0,0,0,0.28)] sm:p-6 lg:sticky lg:top-24" aria-labelledby="booking-panel-title">
+      <p id="booking-panel-title" className="text-sm font-semibold text-slate-400">Ticket price</p>
+      <p className="mt-1 text-3xl font-bold text-white">{ticketPrice}</p>
+
+      <div className="mt-6 rounded-xl border border-white/[0.08] bg-black/15 p-4">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <p className="text-sm font-semibold text-slate-100">Tickets</p>
+            <p className="mt-0.5 text-xs text-slate-500">Up to {maxTickets || 1} per booking</p>
+          </div>
+          <div className="flex shrink-0 items-center gap-1.5" aria-label="Ticket quantity selector">
             <button
-              className="focus-ring grid h-9 w-9 place-items-center rounded-lg bg-white shadow-sm disabled:opacity-40 dark:bg-white/10"
+              type="button"
+              className="focus-ring grid h-9 w-9 place-items-center rounded-lg border border-white/10 bg-white/[0.06] text-slate-200 transition hover:border-teal-400/40 hover:bg-teal-400/10 hover:text-teal-200 disabled:cursor-not-allowed disabled:opacity-40"
               onClick={() => changeCount(ticketCount - 1)}
               disabled={ticketCount <= 1 || isCheckingOut}
               aria-label="Decrease ticket count"
             >
-              <Minus weight="regular" aria-hidden="true" className="h-4 w-4" />
+              <Minus weight="bold" aria-hidden="true" className="h-4 w-4" />
             </button>
-            <span className="grid h-9 w-10 place-items-center rounded-lg text-sm font-black">{ticketCount}</span>
+            <output className="grid h-9 w-10 place-items-center text-sm font-bold text-white" aria-label={`${ticketCount} tickets`}>
+              {ticketCount}
+            </output>
             <button
-              className="focus-ring grid h-9 w-9 place-items-center rounded-lg bg-white shadow-sm disabled:opacity-40 dark:bg-white/10"
+              type="button"
+              className="focus-ring grid h-9 w-9 place-items-center rounded-lg border border-white/10 bg-white/[0.06] text-slate-200 transition hover:border-teal-400/40 hover:bg-teal-400/10 hover:text-teal-200 disabled:cursor-not-allowed disabled:opacity-40"
               onClick={() => changeCount(ticketCount + 1)}
               disabled={ticketCount >= maxTickets || isCheckingOut}
               aria-label="Increase ticket count"
             >
-              <Plus weight="regular" aria-hidden="true" className="h-4 w-4" />
+              <Plus weight="bold" aria-hidden="true" className="h-4 w-4" />
             </button>
           </div>
         </div>
-        <div className="mt-4 flex items-center justify-between border-t border-slate-200 pt-4 text-sm dark:border-white/10">
-          <span>Total</span>
-          <span className="text-lg font-black">{formatCurrency(event.ticketPrice * ticketCount)}</span>
+
+        <div className="mt-5 space-y-3 border-t border-white/[0.08] pt-4 text-sm">
+          <div className="flex items-center justify-between gap-3 text-slate-400">
+            <span>{ticketPrice} x {ticketCount}</span>
+            <span>{ticketCount} {ticketCount === 1 ? 'ticket' : 'tickets'}</span>
+          </div>
+          <div className="flex items-end justify-between gap-3">
+            <span className="font-semibold text-slate-200">Total</span>
+            <span className="text-xl font-bold text-white">{totalPrice}</span>
+          </div>
         </div>
       </div>
-      <div className="mt-4 space-y-2 text-sm text-slate-600 dark:text-slate-300">
-        <p className="flex items-center gap-2">
-          <Ticket weight="regular" aria-hidden="true" className="h-4 w-4 text-brand-600" />
-          {event.availableSeats} seats available
-        </p>
-        <p className="flex items-center gap-2">
-          <ShieldCheck weight="regular" aria-hidden="true" className="h-4 w-4 text-brand-600" />
-          Razorpay secured checkout
-        </p>
+
+      <div className="mt-5">
+        <div className="flex items-center justify-between gap-3 text-sm">
+          <span className="flex items-center gap-2 text-slate-300">
+            <Ticket weight="duotone" aria-hidden="true" className="h-4 w-4 text-teal-300" />
+            Availability
+          </span>
+          <span className="font-semibold text-slate-100">{event.availableSeats} seats available</span>
+        </div>
+        {event.totalSeats ? (
+          <div
+            className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/[0.07]"
+            role="progressbar"
+            aria-label="Seats sold"
+            aria-valuemin="0"
+            aria-valuemax={event.totalSeats}
+            aria-valuenow={soldSeats}
+          >
+            <div className="h-full rounded-full bg-teal-400 transition-[width] duration-300" style={{ width: `${soldPercentage}%` }} />
+          </div>
+        ) : null}
       </div>
-      <Button variant="accent" className="mt-5 w-full" onClick={startCheckout} isLoading={isCheckingOut} disabled={!event.availableSeats}>
+
+      <Button
+        type="button"
+        variant="accent"
+        className="mt-6 h-12 w-full rounded-xl"
+        onClick={startCheckout}
+        isLoading={isCheckingOut}
+        disabled={!event.availableSeats}
+      >
+        {!isCheckingOut ? <Ticket weight="bold" aria-hidden="true" className="h-4 w-4" /> : null}
         {event.availableSeats ? 'Book tickets' : 'Sold out'}
       </Button>
+
+      <p className="mt-4 flex items-center justify-center gap-2 text-xs text-slate-500">
+        <ShieldCheck weight="duotone" aria-hidden="true" className="h-4 w-4 text-teal-400" />
+        Secure payment powered by Razorpay
+      </p>
     </aside>
   );
 }
