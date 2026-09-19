@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
-import { Prohibit, ShieldCheck, UserGear } from '@phosphor-icons/react';
+import { CheckCircle, MagnifyingGlass, Prohibit, ShieldCheck, UserGear } from '@phosphor-icons/react';
 import { analyticsService } from '../../services/analytics.service';
 import { formatDate } from '../../utils/date';
 import { Button } from '../ui/Button';
@@ -13,7 +13,10 @@ export function UserManagement() {
   const [search, setSearch] = useState('');
   const [role, setRole] = useState('');
   const queryClient = useQueryClient();
-  const { data, isLoading } = useQuery({ queryKey: ['admin-users'], queryFn: analyticsService.users });
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['admin-users'],
+    queryFn: analyticsService.users
+  });
   const users = data?.users || [];
 
   const updateMutation = useMutation({
@@ -36,80 +39,121 @@ export function UserManagement() {
   }, [users, search, role]);
 
   return (
-    <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/5">
-      <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-        <div>
-          <h2 className="text-2xl font-black">Users and organizers</h2>
-          <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">Promote organizers, adjust roles, and ban fraudulent accounts.</p>
-        </div>
-        <div className="grid gap-3 sm:grid-cols-[16rem_12rem]">
-          <Input aria-label="Search users" placeholder="Search name or email" value={search} onChange={(event) => setSearch(event.target.value)} />
-          <Select aria-label="Filter role" value={role} onChange={(event) => setRole(event.target.value)}>
-            <option value="">All roles</option>
-            <option value="user">Users</option>
-            <option value="organizer">Organizers</option>
-            <option value="admin">Admins</option>
-          </Select>
+    <section className="overflow-hidden rounded-xl border border-white/[0.08] bg-[#101720]" aria-labelledby="user-management-title">
+      <div className="border-b border-white/[0.08] p-4 sm:p-5">
+        <div className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
+          <div>
+            <h2 id="user-management-title" className="text-base font-semibold text-slate-100">Platform accounts</h2>
+            <p className="mt-1 text-sm text-slate-500">
+              {isLoading ? 'Loading accounts...' : `${filteredUsers.length} of ${users.length} accounts shown`}
+            </p>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-[minmax(16rem,1fr)_12rem]">
+            <Input
+              tone="dark"
+              type="search"
+              aria-label="Search users"
+              placeholder="Search name or email"
+              icon={MagnifyingGlass}
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+            />
+            <Select tone="dark" aria-label="Filter role" value={role} onChange={(event) => setRole(event.target.value)}>
+              <option value="">All roles</option>
+              <option value="user">Attendees</option>
+              <option value="organizer">Organizers</option>
+              <option value="admin">Admins</option>
+            </Select>
+          </div>
         </div>
       </div>
 
-      {isLoading ? <Skeleton className="mt-5 h-80" /> : null}
-      {!isLoading ? (
-        <div className="mt-5 overflow-x-auto">
-          <table className="w-full min-w-[52rem] text-left text-sm">
-            <thead className="text-xs uppercase text-slate-500">
+      {isLoading ? <Skeleton className="m-5 h-80 !bg-white/5" /> : null}
+      {!isLoading && isError ? (
+        <div role="alert" className="m-5 rounded-xl border border-rose-400/20 bg-rose-950/20 p-5 text-center text-sm text-rose-100">
+          Unable to load platform accounts.
+        </div>
+      ) : null}
+
+      {!isLoading && !isError ? (
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[58rem] text-left text-sm">
+            <thead className="border-b border-white/[0.08] bg-black/10 text-xs uppercase text-slate-500">
               <tr>
-                <th className="py-3">Account</th>
-                <th className="py-3">Role</th>
-                <th className="py-3">Joined</th>
-                <th className="py-3">Status</th>
-                <th className="py-3 text-right">Actions</th>
+                <th scope="col" className="px-5 py-3 font-semibold">Account</th>
+                <th scope="col" className="px-4 py-3 font-semibold">Role</th>
+                <th scope="col" className="px-4 py-3 font-semibold">Joined</th>
+                <th scope="col" className="px-4 py-3 font-semibold">Status</th>
+                <th scope="col" className="px-5 py-3 text-right font-semibold">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-200 dark:divide-white/10">
-              {filteredUsers.map((user) => (
-                <tr key={user._id}>
-                  <td className="py-3">
-                    <p className="font-bold">{user.name}</p>
-                    <p className="text-slate-500">{user.email}</p>
-                  </td>
-                  <td className="py-3">
-                    <Select
-                      value={user.role}
-                      onChange={(event) => updateMutation.mutate({ id: user._id, payload: { role: event.target.value } })}
-                      aria-label={`Role for ${user.name}`}
-                      className="max-w-40"
-                    >
-                      <option value="user">User</option>
-                      <option value="organizer">Organizer</option>
-                      <option value="admin">Admin</option>
-                    </Select>
-                  </td>
-                  <td className="py-3 text-slate-600 dark:text-slate-300">{formatDate(user.createdAt)}</td>
-                  <td className="py-3">
-                    <span className={`rounded-full px-3 py-1 text-xs font-bold ${user.isBanned ? 'bg-rose-50 text-rose-700 dark:bg-rose-500/10 dark:text-rose-100' : 'bg-brand-50 text-brand-700 dark:bg-brand-500/10 dark:text-brand-100'}`}>
-                      {user.isBanned ? 'Banned' : 'Active'}
-                    </span>
-                  </td>
-                  <td className="py-3">
-                    <div className="flex justify-end gap-2">
+            <tbody className="divide-y divide-white/[0.06]">
+              {filteredUsers.map((user) => {
+                const isUpdatingUser = updateMutation.isPending && updateMutation.variables?.id === user._id;
+
+                return (
+                  <tr key={user._id} className="text-slate-300 transition hover:bg-white/[0.025]">
+                    <td className="px-5 py-3.5">
+                      <div className="flex items-center gap-3">
+                        {user.avatar ? (
+                          <img src={user.avatar} alt="" className="h-9 w-9 rounded-full border border-white/10 object-cover" />
+                        ) : (
+                          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/[0.06] text-xs font-bold text-slate-300">
+                            {user.name?.charAt(0)?.toUpperCase() || 'U'}
+                          </span>
+                        )}
+                        <div className="min-w-0">
+                          <p className="flex items-center gap-1.5 font-semibold text-slate-100">
+                            <span className="max-w-56 truncate">{user.name}</span>
+                            {user.isVerified ? <CheckCircle weight="fill" aria-label="Verified account" className="h-3.5 w-3.5 shrink-0 text-teal-400" /> : null}
+                          </p>
+                          <p className="max-w-64 truncate text-xs text-slate-500">{user.email}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-4 py-3.5">
+                      <Select
+                        tone="dark"
+                        value={user.role}
+                        onChange={(event) => updateMutation.mutate({ id: user._id, payload: { role: event.target.value } })}
+                        aria-label={`Role for ${user.name}`}
+                        className="min-w-36"
+                        disabled={isUpdatingUser}
+                      >
+                        <option value="user">Attendee</option>
+                        <option value="organizer">Organizer</option>
+                        <option value="admin">Admin</option>
+                      </Select>
+                    </td>
+                    <td className="px-4 py-3.5 text-slate-400">{formatDate(user.createdAt)}</td>
+                    <td className="px-4 py-3.5">
+                      <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${
+                        user.isBanned ? 'bg-rose-400/10 text-rose-200' : 'bg-teal-400/10 text-teal-200'
+                      }`}>
+                        {user.isBanned ? 'Banned' : 'Active'}
+                      </span>
+                    </td>
+                    <td className="px-5 py-3.5 text-right">
                       <Button
+                        type="button"
+                        size="compact"
                         variant={user.isBanned ? 'accent' : 'danger'}
                         onClick={() => updateMutation.mutate({ id: user._id, payload: { isBanned: !user.isBanned } })}
-                        isLoading={updateMutation.isPending}
+                        isLoading={isUpdatingUser}
                       >
                         {user.isBanned ? <ShieldCheck weight="regular" aria-hidden="true" className="h-4 w-4" /> : <Prohibit weight="regular" aria-hidden="true" className="h-4 w-4" />}
                         {user.isBanned ? 'Restore' : 'Ban'}
                       </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
+
           {!filteredUsers.length ? (
-            <div className="py-10 text-center text-sm text-slate-500">
-              <UserGear weight="regular" aria-hidden="true" className="mx-auto mb-2 h-8 w-8" />
+            <div className="py-12 text-center text-sm text-slate-500">
+              <UserGear weight="duotone" aria-hidden="true" className="mx-auto mb-3 h-8 w-8" />
               No accounts match your filters.
             </div>
           ) : null}

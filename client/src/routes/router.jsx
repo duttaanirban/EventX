@@ -42,6 +42,10 @@ export const router = createBrowserRouter([
     children: [{ path: '/organizer', element: withSuspense(<OrganizerDashboardPage />) }]
   },
   {
+    element: <ProtectedRoute roles={['admin']} />,
+    children: [{ path: '/admin', element: withSuspense(<AdminDashboardPage />) }]
+  },
+  {
     element: <PublicLayout />,
     children: [
       { path: '/', element: withSuspense(<LandingPage />) },
@@ -51,10 +55,6 @@ export const router = createBrowserRouter([
       {
         element: <ProtectedRoute />,
         children: [{ path: '/bookings', element: withSuspense(<BookingHistoryPage />) }]
-      },
-      {
-        element: <ProtectedRoute roles={['admin']} />,
-        children: [{ path: '/admin', element: withSuspense(<AdminDashboardPage />) }]
       }
     ]
   }
