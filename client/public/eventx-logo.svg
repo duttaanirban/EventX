@@ -1,0 +1,13 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="beamA" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF3D68"/>
+      <stop offset="100%" stop-color="#FFB020"/>
+    </linearGradient>
+  </defs>
+  <g stroke-linecap="round">
+    <rect x="28" y="52" width="64" height="16" rx="8" fill="#EDEAFB" transform="rotate(45 60 60)"/>
+    <rect x="28" y="52" width="64" height="16" rx="8" fill="url(#beamA)" transform="rotate(-45 60 60)"/>
+  </g>
+  <circle cx="60" cy="60" r="7" fill="#2DE1C2"/>
+</svg>

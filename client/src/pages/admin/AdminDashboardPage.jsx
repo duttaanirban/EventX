@@ -4,7 +4,6 @@ import {
   CreditCard,
   House,
   List,
-  ShieldCheck,
   SignOut,
   SquaresFour,
   Users,
@@ -67,9 +66,7 @@ export default function AdminDashboardPage() {
         >
           <div className="flex h-14 items-center justify-between">
             <Link to="/" className="focus-ring flex items-center gap-3 rounded-lg" aria-label="EventX home">
-              <span className="grid h-9 w-9 place-items-center rounded-xl bg-teal-500 text-[#031513] shadow-[0_0_24px_rgba(20,184,166,0.18)]">
-                <ShieldCheck weight="bold" aria-hidden="true" className="h-5 w-5" />
-              </span>
+              <img src={`${import.meta.env.BASE_URL}eventx-logo.svg`} alt="" aria-hidden="true" className="h-9 w-9 shrink-0" />
               <div>
                 <p className="text-sm font-bold text-white">EventX</p>
                 <p className="text-xs text-slate-500">Admin Console</p>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { CalendarDots, SquaresFour, SignOut, List, Moon, MagnifyingGlass, Sun, X } from '@phosphor-icons/react';
+import { SquaresFour, SignOut, List, Moon, MagnifyingGlass, Sun, X } from '@phosphor-icons/react';
 import { Button } from '../ui/Button';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../hooks/useTheme';
@@ -41,10 +41,8 @@ export function PublicNavbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#070b12]/85 text-white shadow-[0_10px_40px_rgba(0,0,0,0.18)] backdrop-blur-xl">
       <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
-        <Link to="/" className="focus-ring flex shrink-0 items-center gap-2.5 rounded-lg" aria-label="EventX home">
-          <span className="grid h-10 w-10 place-items-center rounded-xl bg-teal-500 text-[#041311] shadow-[0_0_24px_rgba(20,184,166,0.3)]">
-            <CalendarDots weight="regular" aria-hidden="true" className="h-5 w-5" />
-          </span>
+        <Link to="/" className="focus-ring flex shrink-0 items-center rounded-lg" aria-label="EventX home">
+          <img src={`${import.meta.env.BASE_URL}eventx-logo.svg`} alt="" aria-hidden="true" className="h-10 w-10 shrink-0" />
           <span className="text-xl font-black tracking-normal">EventX</span>
         </Link>
 

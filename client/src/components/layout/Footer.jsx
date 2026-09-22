@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { CalendarDots } from '@phosphor-icons/react';
 
 const columns = [
   {
@@ -21,10 +20,8 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-x-8 gap-y-10 sm:grid-cols-3 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
           <div className="sm:col-span-3 lg:col-span-1">
-            <Link to="/" aria-label="EventX home" className="focus-ring inline-flex items-center gap-2.5 rounded-lg text-xl font-black tracking-normal text-white">
-              <span className="grid h-10 w-10 place-items-center rounded-xl bg-teal-500 text-[#041311]">
-                <CalendarDots weight="regular" aria-hidden="true" className="h-5 w-5" />
-              </span>
+            <Link to="/" aria-label="EventX home" className="focus-ring inline-flex items-center rounded-lg text-xl font-black tracking-normal text-white">
+              <img src={`${import.meta.env.BASE_URL}eventx-logo.svg`} alt="" aria-hidden="true" className="h-10 w-10 shrink-0" />
               EventX
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-6">Create, manage, and experience better events with EventX.</p>
