@@ -6,6 +6,7 @@ import { Skeleton } from '../components/ui/Skeleton';
 import { ErrorBoundary } from '../components/ui/ErrorBoundary';
 
 const LandingPage = lazy(() => import('../pages/LandingPage'));
+const AboutPage = lazy(() => import('../pages/AboutPage'));
 const EventsPage = lazy(() => import('../pages/EventsPage'));
 const EventDetailPage = lazy(() => import('../pages/EventDetailPage'));
 const LoginPage = lazy(() => import('../pages/auth/LoginPage'));
@@ -49,6 +50,7 @@ export const router = createBrowserRouter([
     element: <PublicLayout />,
     children: [
       { path: '/', element: withSuspense(<LandingPage />) },
+      { path: '/about', element: withSuspense(<AboutPage />) },
       { path: '/events', element: withSuspense(<EventsPage />) },
       { path: '/events/:id', element: withSuspense(<EventDetailPage />) },
       { path: '/oauth/success', element: withSuspense(<OAuthSuccessPage />) },

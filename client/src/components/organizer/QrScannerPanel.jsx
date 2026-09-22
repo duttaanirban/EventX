@@ -104,7 +104,7 @@ export function QrScannerPanel() {
             <label htmlFor="manual-qr-payload" className="sr-only">QR payload</label>
             <textarea
               id="manual-qr-payload"
-              className="focus-ring min-h-36 w-full resize-y rounded-xl border border-slate-200 dark:border-white/10 bg-slate-900/5 dark:bg-white/[0.045] px-3 py-3 font-mono text-xs leading-5 text-slate-900 dark:text-white transition placeholder:text-slate-600 hover:border-slate-200 dark:hover:border-white/20 focus:border-teal-400/60"
+              className="focus-ring min-h-36 w-full resize-y rounded-xl border border-slate-200 dark:border-white/10 bg-slate-900/5 dark:bg-white/[0.045] px-3 py-3 font-sans text-xs leading-5 text-slate-900 dark:text-white transition placeholder:text-slate-600 hover:border-slate-200 dark:hover:border-white/20 focus:border-teal-400/60"
               value={manualPayload}
               onChange={(event) => setManualPayload(event.target.value)}
               placeholder='{"bookingId":"...","eventId":"...","token":"..."}'

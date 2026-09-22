@@ -4,9 +4,11 @@ import { Footer } from '../components/layout/Footer';
 
 export function PublicLayout() {
   return (
-    <div className="min-h-screen">
+    <div className="flex min-h-dvh flex-col">
       <PublicNavbar />
-      <Outlet />
+      <div className="flex-1">
+        <Outlet />
+      </div>
       <Footer />
     </div>
   );

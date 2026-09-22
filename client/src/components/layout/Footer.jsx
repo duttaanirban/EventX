@@ -11,7 +11,7 @@ const columns = [
       { label: 'Check-in' }
     ]
   },
-  { title: 'Company', items: [{ label: 'About' }, { label: 'Contact' }, { label: 'Careers' }] },
+  { title: 'Company', items: [{ label: 'About', to: '/about' }, { label: 'Contact' }, { label: 'Careers' }] },
   { title: 'Resources', items: [{ label: 'Help Center' }, { label: 'Documentation' }, { label: 'Privacy' }, { label: 'Terms' }] }
 ];
 

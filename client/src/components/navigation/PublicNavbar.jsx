@@ -50,8 +50,7 @@ export function PublicNavbar() {
           <NavLink to="/" end className={navClassName}>Home</NavLink>
           <NavLink to="/events" className={navClassName}>Events</NavLink>
           <NavLink to={organizePath} className={navClassName}>Organize</NavLink>
-          <Link to="/#pricing" className={`${baseNavLink} text-slate-600 dark:text-slate-300`}>Pricing</Link>
-          <Link to="/#about" className={`${baseNavLink} text-slate-600 dark:text-slate-300`}>About</Link>
+          <NavLink to="/about" className={navClassName}>About</NavLink>
         </nav>
 
         <div className="ml-auto hidden items-center gap-2 lg:flex">
@@ -130,8 +129,7 @@ export function PublicNavbar() {
               <NavLink to="/" end className={navClassName}>Home</NavLink>
               <NavLink to="/events" className={navClassName}>Events</NavLink>
               <NavLink to={organizePath} className={navClassName}>Organize</NavLink>
-              <Link to="/#pricing" className={`${baseNavLink} text-slate-600 dark:text-slate-300`}>Pricing</Link>
-              <Link to="/#about" className={`${baseNavLink} text-slate-600 dark:text-slate-300`}>About</Link>
+              <NavLink to="/about" className={navClassName}>About</NavLink>
               {user ? <NavLink to="/bookings" className={navClassName}>My tickets</NavLink> : null}
             </nav>
             <div className="mt-4 flex gap-2 border-t border-slate-200 dark:border-white/10 pt-4">

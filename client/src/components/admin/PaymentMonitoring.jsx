@@ -104,7 +104,7 @@ export function PaymentMonitoring() {
                 return (
                   <tr key={payment._id} className="text-slate-600 dark:text-slate-300 transition hover:bg-slate-900/5 dark:hover:bg-white/[0.025]">
                     <td className="px-5 py-3.5">
-                      <p className="max-w-52 truncate font-mono text-xs font-semibold text-slate-700 dark:text-slate-200" title={payment.razorpayOrderId}>
+                      <p className="max-w-52 truncate font-sans text-xs font-semibold text-slate-700 dark:text-slate-200" title={payment.razorpayOrderId}>
                         {payment.razorpayOrderId}
                       </p>
                       <p className="mt-1 text-xs text-slate-500">{formatDate(payment.createdAt)}</p>
