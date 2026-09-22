@@ -8,18 +8,18 @@ export function MetricCard({ label, value, tone = 'brand', icon: Icon, surface =
 
   if (surface === 'dashboard') {
     const iconTones = {
-      brand: 'bg-teal-400/10 text-teal-300',
-      ember: 'bg-orange-400/10 text-orange-300',
-      berry: 'bg-rose-400/10 text-rose-300',
-      slate: 'bg-sky-400/10 text-sky-300'
+      brand: 'bg-teal-400/10 text-teal-700 dark:text-teal-300',
+      ember: 'bg-orange-400/10 text-orange-700 dark:text-orange-300',
+      berry: 'bg-rose-400/10 text-rose-700 dark:text-rose-300',
+      slate: 'bg-sky-400/10 text-sky-700 dark:text-sky-300'
     };
 
     return (
-      <article className="min-w-0 rounded-xl border border-white/[0.08] bg-[#101720] p-4 shadow-[0_10px_30px_rgba(0,0,0,0.16)]">
+      <article className="min-w-0 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#101720] p-4 shadow-[0_10px_30px_rgba(0,0,0,0.16)]">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">{label}</p>
-            <p className="mt-2 break-words text-2xl font-bold text-white">{value}</p>
+            <p className="mt-2 break-words text-2xl font-bold text-slate-900 dark:text-white">{value}</p>
             {detail ? <p className="mt-1 text-xs text-slate-500">{detail}</p> : null}
           </div>
           {Icon ? (

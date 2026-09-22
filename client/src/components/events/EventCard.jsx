@@ -10,7 +10,7 @@ export function EventCard({ event, variant = 'default' }) {
       <motion.article
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        className="group h-full min-w-0 rounded-xl border border-white/[0.08] bg-[#101720] text-white transition-shadow duration-200 hover:border-teal-400/20 hover:shadow-[0_12px_32px_rgba(0,0,0,0.25)]"
+        className="group h-full min-w-0 rounded-xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#101720] text-slate-900 dark:text-white transition-shadow duration-200 hover:border-teal-400/20 hover:shadow-[0_12px_32px_rgba(0,0,0,0.25)]"
       >
         <Link
           to={`/events/${event._id}`}
@@ -33,31 +33,31 @@ export function EventCard({ event, variant = 'default' }) {
           </div>
           <div className="flex flex-1 flex-col p-4">
             <h3 className="min-h-12 break-words line-clamp-2 text-base font-semibold leading-6">{event.title}</h3>
-            <div className="mt-3 space-y-2 text-sm leading-5 text-slate-400">
+            <div className="mt-3 space-y-2 text-sm leading-5 text-slate-600 dark:text-slate-400">
               <p className="flex items-start gap-2">
-                <CalendarDots weight="duotone" aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-teal-400" />
+                <CalendarDots weight="duotone" aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-teal-700 dark:text-teal-400" />
                 <span className="min-w-0 break-words">{formatDate(event.date)} at {event.time}</span>
               </p>
               <p className="flex items-start gap-2">
-                <MapPin weight="duotone" aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-teal-400" />
+                <MapPin weight="duotone" aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-teal-700 dark:text-teal-400" />
                 <span className="min-w-0 break-words">{event.venue}, {event.city}</span>
               </p>
             </div>
             <div className="mt-auto pt-4">
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <span className="break-words text-xl font-bold text-white">{formatCurrency(event.ticketPrice)}</span>
-                <span className="flex items-center gap-1.5 text-xs text-slate-400">
-                  <Users weight="duotone" aria-hidden="true" className="h-4 w-4 shrink-0 text-teal-400" />
+                <span className="break-words text-xl font-bold text-slate-900 dark:text-white">{formatCurrency(event.ticketPrice)}</span>
+                <span className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400">
+                  <Users weight="duotone" aria-hidden="true" className="h-4 w-4 shrink-0 text-teal-700 dark:text-teal-400" />
                   {event.availableSeats} seats left
                 </span>
               </div>
-              <div aria-hidden="true" className="mt-3 h-1 overflow-hidden rounded-full bg-white/[0.08]">
+              <div aria-hidden="true" className="mt-3 h-1 overflow-hidden rounded-full bg-slate-900/5 dark:bg-white/[0.08]">
                 <div
                   className="h-1 rounded-full bg-teal-400"
                   style={{ width: `${Math.max(8, ((event.totalSeats - event.availableSeats) / event.totalSeats) * 100)}%` }}
                 />
               </div>
-              <div className="mt-4 flex items-center justify-between border-t border-white/[0.06] pt-3 text-sm font-semibold text-teal-300 group-hover:text-teal-200">
+              <div className="mt-4 flex items-center justify-between border-t border-slate-200 dark:border-white/[0.06] pt-3 text-sm font-semibold text-teal-700 dark:text-teal-300 group-hover:text-teal-700 dark:group-hover:text-teal-200">
                 <span>View Details</span>
                 <ArrowRight weight="bold" aria-hidden="true" className="h-4 w-4 shrink-0" />
               </div>

@@ -11,16 +11,16 @@ import { Select } from '../ui/Select';
 import { Skeleton } from '../ui/Skeleton';
 
 const riskFor = (payment) => {
-  if (payment.paymentStatus === 'failed') return { label: 'High', className: 'bg-rose-400/10 text-rose-200' };
-  if (payment.amount >= 50000 || payment.ticketCount >= 8) return { label: 'Review', className: 'bg-orange-400/10 text-orange-200' };
-  return { label: 'Normal', className: 'bg-teal-400/10 text-teal-200' };
+  if (payment.paymentStatus === 'failed') return { label: 'High', className: 'bg-rose-400/10 text-rose-700 dark:text-rose-200' };
+  if (payment.amount >= 50000 || payment.ticketCount >= 8) return { label: 'Review', className: 'bg-orange-400/10 text-orange-700 dark:text-orange-200' };
+  return { label: 'Normal', className: 'bg-teal-400/10 text-teal-700 dark:text-teal-200' };
 };
 
 const statusClasses = {
-  created: 'bg-sky-400/10 text-sky-200',
-  paid: 'bg-teal-400/10 text-teal-200',
-  failed: 'bg-rose-400/10 text-rose-200',
-  refunded: 'bg-violet-400/10 text-violet-200'
+  created: 'bg-sky-400/10 text-sky-700 dark:text-sky-200',
+  paid: 'bg-teal-400/10 text-teal-700 dark:text-teal-200',
+  failed: 'bg-rose-400/10 text-rose-700 dark:text-rose-200',
+  refunded: 'bg-violet-400/10 text-violet-700 dark:text-violet-200'
 };
 
 export function PaymentMonitoring() {
@@ -50,11 +50,11 @@ export function PaymentMonitoring() {
   const riskCount = payments.filter((payment) => ['High', 'Review'].includes(riskFor(payment).label)).length;
 
   return (
-    <section className="overflow-hidden rounded-xl border border-white/[0.08] bg-[#101720]" aria-labelledby="payment-monitoring-title">
-      <div className="border-b border-white/[0.08] p-4 sm:p-5">
+    <section className="overflow-hidden rounded-xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#101720]" aria-labelledby="payment-monitoring-title">
+      <div className="border-b border-slate-200 dark:border-white/[0.08] p-4 sm:p-5">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h2 id="payment-monitoring-title" className="text-base font-semibold text-slate-100">Transactions</h2>
+            <h2 id="payment-monitoring-title" className="text-base font-semibold text-slate-900 dark:text-slate-100">Transactions</h2>
             <p className="mt-1 text-sm text-slate-500">
               {riskCount} {riskCount === 1 ? 'transaction needs' : 'transactions need'} review based on amount, quantity, or failure state.
             </p>
@@ -75,9 +75,9 @@ export function PaymentMonitoring() {
         </div>
       </div>
 
-      {isLoading ? <Skeleton className="m-5 h-80 !bg-white/5" /> : null}
+      {isLoading ? <Skeleton className="m-5 h-80 !bg-slate-900/5 dark:!bg-white/5" /> : null}
       {!isLoading && isError ? (
-        <div role="alert" className="m-5 rounded-xl border border-rose-400/20 bg-rose-950/20 p-5 text-center text-sm text-rose-100">
+        <div role="alert" className="m-5 rounded-xl border border-rose-400/20 bg-rose-950/20 p-5 text-center text-sm text-rose-700 dark:text-rose-100">
           Unable to load payment records.
         </div>
       ) : null}
@@ -85,7 +85,7 @@ export function PaymentMonitoring() {
       {!isLoading && !isError ? (
         <div className="overflow-x-auto">
           <table className="w-full min-w-[68rem] text-left text-sm">
-            <thead className="border-b border-white/[0.08] bg-black/10 text-xs uppercase text-slate-500">
+            <thead className="border-b border-slate-200 dark:border-white/[0.08] bg-slate-900/5 dark:bg-black/10 text-xs uppercase text-slate-500">
               <tr>
                 <th scope="col" className="px-5 py-3 font-semibold">Transaction</th>
                 <th scope="col" className="px-4 py-3 font-semibold">Buyer</th>
@@ -96,33 +96,33 @@ export function PaymentMonitoring() {
                 <th scope="col" className="px-5 py-3 text-right font-semibold">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/[0.06]">
+            <tbody className="divide-y divide-slate-200 dark:divide-white/[0.06]">
               {filteredPayments.map((payment) => {
                 const risk = riskFor(payment);
                 const isRefunding = refundMutation.isPending && refundMutation.variables === payment._id;
 
                 return (
-                  <tr key={payment._id} className="text-slate-300 transition hover:bg-white/[0.025]">
+                  <tr key={payment._id} className="text-slate-600 dark:text-slate-300 transition hover:bg-slate-900/5 dark:hover:bg-white/[0.025]">
                     <td className="px-5 py-3.5">
-                      <p className="max-w-52 truncate font-mono text-xs font-semibold text-slate-200" title={payment.razorpayOrderId}>
+                      <p className="max-w-52 truncate font-mono text-xs font-semibold text-slate-700 dark:text-slate-200" title={payment.razorpayOrderId}>
                         {payment.razorpayOrderId}
                       </p>
                       <p className="mt-1 text-xs text-slate-500">{formatDate(payment.createdAt)}</p>
                     </td>
                     <td className="px-4 py-3.5">
-                      <p className="font-medium text-slate-100">{payment.user?.name}</p>
+                      <p className="font-medium text-slate-900 dark:text-slate-100">{payment.user?.name}</p>
                       <p className="mt-0.5 max-w-52 truncate text-xs text-slate-500">{payment.user?.email}</p>
                     </td>
                     <td className="px-4 py-3.5">
-                      <p className="max-w-52 truncate text-slate-200">{payment.event?.title}</p>
+                      <p className="max-w-52 truncate text-slate-700 dark:text-slate-200">{payment.event?.title}</p>
                       <p className="mt-1 text-xs text-slate-500">{payment.ticketCount} {payment.ticketCount === 1 ? 'ticket' : 'tickets'}</p>
                     </td>
-                    <td className="px-4 py-3.5 font-semibold text-slate-100">{formatCurrency(payment.amount)}</td>
+                    <td className="px-4 py-3.5 font-semibold text-slate-900 dark:text-slate-100">{formatCurrency(payment.amount)}</td>
                     <td className="px-4 py-3.5">
-                      <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold capitalize ${statusClasses[payment.paymentStatus] || 'bg-white/[0.06] text-slate-300'}`}>
+                      <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold capitalize ${statusClasses[payment.paymentStatus] || 'bg-slate-900/5 dark:bg-white/[0.06] text-slate-600 dark:text-slate-300'}`}>
                         {payment.paymentStatus}
                       </span>
-                      {payment.failureReason ? <p className="mt-1.5 max-w-44 text-xs leading-4 text-rose-300">{payment.failureReason}</p> : null}
+                      {payment.failureReason ? <p className="mt-1.5 max-w-44 text-xs leading-4 text-rose-700 dark:text-rose-300">{payment.failureReason}</p> : null}
                     </td>
                     <td className="px-4 py-3.5">
                       <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ${risk.className}`}>
@@ -135,7 +135,7 @@ export function PaymentMonitoring() {
                         type="button"
                         size="compact"
                         variant="nav"
-                        className="border border-white/10"
+                        className="border border-slate-200 dark:border-white/10"
                         disabled={payment.paymentStatus !== 'paid'}
                         isLoading={isRefunding}
                         onClick={() => refundMutation.mutate(payment._id)}

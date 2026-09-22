@@ -31,9 +31,9 @@ export default function OAuthSuccessPage() {
   return (
     <AuthShell>
       <div className="py-6 text-center" role="status" aria-live="polite">
-        <SpinnerGap weight="regular" aria-hidden="true" className="mx-auto h-8 w-8 animate-spin text-teal-300" />
+        <SpinnerGap weight="regular" aria-hidden="true" className="mx-auto h-8 w-8 animate-spin text-teal-700 dark:text-teal-300" />
         <h1 className="mt-5 text-2xl font-bold">Signing you in...</h1>
-        <p className="mt-2 text-sm text-slate-400">Securely loading your EventX account.</p>
+        <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">Securely loading your EventX account.</p>
       </div>
     </AuthShell>
   );

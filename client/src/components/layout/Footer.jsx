@@ -1,3 +1,4 @@
+import { EventXLogo } from '../ui/EventXLogo';
 import { Link } from 'react-router-dom';
 
 const columns = [
@@ -16,24 +17,24 @@ const columns = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/[0.08] bg-[#05090f] pb-6 pt-12 text-slate-400 sm:pt-16">
+    <footer className="border-t border-slate-200 dark:border-white/[0.08] bg-slate-100 dark:bg-[#05090f] pb-6 pt-12 text-slate-600 dark:text-slate-400 sm:pt-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-x-8 gap-y-10 sm:grid-cols-3 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
           <div className="sm:col-span-3 lg:col-span-1">
-            <Link to="/" aria-label="EventX home" className="focus-ring inline-flex items-center rounded-lg text-xl font-black tracking-normal text-white">
-              <img src={`${import.meta.env.BASE_URL}eventx-logo.svg`} alt="" aria-hidden="true" className="h-10 w-10 shrink-0" />
+            <Link to="/" aria-label="EventX home" className="focus-ring inline-flex items-center rounded-lg text-xl font-black tracking-normal text-slate-900 dark:text-white">
+              <EventXLogo className="h-10 w-10" />
               EventX
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-6">Create, manage, and experience better events with EventX.</p>
           </div>
           {columns.map(({ title, items }) => (
             <div key={title} className="min-w-0">
-              <h2 className="text-sm font-semibold text-white">{title}</h2>
+              <h2 className="text-sm font-semibold text-slate-900 dark:text-white">{title}</h2>
               <ul className="mt-4 space-y-3 text-sm leading-6">
                 {items.map(({ label, to }) => (
                   <li key={label}>
                     {to ? (
-                      <Link to={to} className="focus-ring rounded-sm transition-colors hover:text-teal-300">{label}</Link>
+                      <Link to={to} className="focus-ring rounded-sm transition-colors hover:text-teal-700 dark:hover:text-teal-300">{label}</Link>
                     ) : (
                       <span>{label}</span>
                     )}
@@ -43,7 +44,7 @@ export function Footer() {
             </div>
           ))}
         </div>
-        <div className="mt-10 border-t border-white/[0.06] pt-6 text-xs leading-5 sm:mt-12">
+        <div className="mt-10 border-t border-slate-200 dark:border-white/[0.06] pt-6 text-xs leading-5 sm:mt-12">
           <p>&copy; {new Date().getFullYear()} EventX</p>
         </div>
       </div>

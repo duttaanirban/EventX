@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { SquaresFour, SignOut, List, Moon, MagnifyingGlass, Sun, X } from '@phosphor-icons/react';
+import { SquaresFour, SignOut, List, MagnifyingGlass, X } from '@phosphor-icons/react';
 import { Button } from '../ui/Button';
 import { useAuth } from '../../context/AuthContext';
-import { useTheme } from '../../hooks/useTheme';
+import { ThemeToggle } from '../ui/ThemeToggle';
+import { EventXLogo } from '../ui/EventXLogo';
 
 const baseNavLink =
-  'focus-ring rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-white/[0.06] hover:text-teal-300';
+  'focus-ring rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-slate-900/5 dark:hover:bg-white/[0.06] hover:text-teal-700 dark:hover:text-teal-300';
 
 function getDashboardPath(user) {
   if (user?.role === 'admin') return '/admin';
@@ -16,7 +17,6 @@ function getDashboardPath(user) {
 
 export function PublicNavbar() {
   const { user, logout } = useAuth();
-  const { theme, toggleTheme } = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -36,13 +36,13 @@ export function PublicNavbar() {
   };
 
   const navClassName = ({ isActive }) =>
-    `${baseNavLink} ${isActive ? 'bg-teal-400/10 text-teal-300' : 'text-slate-300'}`;
+    `${baseNavLink} ${isActive ? 'bg-teal-400/10 text-teal-700 dark:text-teal-300' : 'text-slate-600 dark:text-slate-300'}`;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#070b12]/85 text-white shadow-[0_10px_40px_rgba(0,0,0,0.18)] backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-slate-200 dark:border-white/10 bg-white/85 dark:bg-[#070b12]/85 text-slate-900 dark:text-white shadow-[0_10px_40px_rgba(0,0,0,0.18)] backdrop-blur-xl">
       <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
         <Link to="/" className="focus-ring flex shrink-0 items-center rounded-lg" aria-label="EventX home">
-          <img src={`${import.meta.env.BASE_URL}eventx-logo.svg`} alt="" aria-hidden="true" className="h-10 w-10 shrink-0" />
+          <EventXLogo className="h-10 w-10" />
           <span className="text-xl font-black tracking-normal">EventX</span>
         </Link>
 
@@ -50,8 +50,8 @@ export function PublicNavbar() {
           <NavLink to="/" end className={navClassName}>Home</NavLink>
           <NavLink to="/events" className={navClassName}>Events</NavLink>
           <NavLink to={organizePath} className={navClassName}>Organize</NavLink>
-          <Link to="/#pricing" className={`${baseNavLink} text-slate-300`}>Pricing</Link>
-          <Link to="/#about" className={`${baseNavLink} text-slate-300`}>About</Link>
+          <Link to="/#pricing" className={`${baseNavLink} text-slate-600 dark:text-slate-300`}>Pricing</Link>
+          <Link to="/#about" className={`${baseNavLink} text-slate-600 dark:text-slate-300`}>About</Link>
         </nav>
 
         <div className="ml-auto hidden items-center gap-2 lg:flex">
@@ -64,17 +64,10 @@ export function PublicNavbar() {
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               placeholder="Search events"
-              className="focus-ring h-10 w-56 rounded-lg border border-white/10 bg-white/[0.06] pl-9 pr-3 text-sm text-white placeholder:text-slate-500 hover:border-white/20 focus:border-teal-500/60 focus:bg-white/[0.08]"
+              className="focus-ring h-10 w-56 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-900/5 dark:bg-white/[0.06] pl-9 pr-3 text-sm text-slate-900 dark:text-white placeholder:text-slate-500 hover:border-slate-200 dark:hover:border-white/20 focus:border-teal-500/60 focus:bg-slate-900/5 dark:focus:bg-white/[0.08]"
             />
           </form>
-          <button
-            type="button"
-            className="focus-ring grid h-10 w-10 place-items-center rounded-lg text-slate-300 transition hover:bg-white/[0.08] hover:text-teal-300"
-            onClick={toggleTheme}
-            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
-          >
-            {theme === 'dark' ? <Sun weight="regular" aria-hidden="true" className="h-5 w-5" /> : <Moon weight="regular" aria-hidden="true" className="h-5 w-5" />}
-          </button>
+          <ThemeToggle />
           {user ? (
             <>
               <Link to={dashboardPath}>
@@ -87,7 +80,7 @@ export function PublicNavbar() {
                 type="button"
                 variant="nav"
                 size="compact"
-                className="!h-10 !w-10 shrink-0 rounded-lg border border-white/10 bg-white/[0.04] !px-0 hover:border-teal-400/30 hover:bg-teal-400/10"
+                className="!h-10 !w-10 shrink-0 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-900/5 dark:bg-white/[0.04] !px-0 hover:border-teal-400/30 hover:bg-teal-400/10"
                 onClick={logout}
                 aria-label="Sign out"
                 title="Sign out"
@@ -104,17 +97,10 @@ export function PublicNavbar() {
         </div>
 
         <div className="ml-auto flex items-center gap-2 lg:hidden">
+          <ThemeToggle />
           <button
             type="button"
-            className="focus-ring grid h-10 w-10 place-items-center rounded-lg text-slate-300 transition hover:bg-white/[0.08] hover:text-teal-300"
-            onClick={toggleTheme}
-            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
-          >
-            {theme === 'dark' ? <Sun weight="regular" aria-hidden="true" className="h-5 w-5" /> : <Moon weight="regular" aria-hidden="true" className="h-5 w-5" />}
-          </button>
-          <button
-            type="button"
-            className="focus-ring grid h-10 w-10 place-items-center rounded-lg border border-white/10 text-slate-200 transition hover:border-teal-400/40 hover:text-teal-300"
+            className="focus-ring grid h-10 w-10 place-items-center rounded-lg border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-200 transition hover:border-teal-400/40 hover:text-teal-700 dark:hover:text-teal-300"
             onClick={() => setIsMenuOpen((current) => !current)}
             aria-expanded={isMenuOpen}
             aria-controls="mobile-navigation"
@@ -126,7 +112,7 @@ export function PublicNavbar() {
       </div>
 
       {isMenuOpen ? (
-        <div id="mobile-navigation" className="border-t border-white/10 bg-[#070b12]/95 px-4 py-5 backdrop-blur-xl lg:hidden">
+        <div id="mobile-navigation" className="border-t border-slate-200 dark:border-white/10 bg-white/95 dark:bg-[#070b12]/95 px-4 py-5 backdrop-blur-xl lg:hidden">
           <div className="mx-auto max-w-7xl">
             <form onSubmit={handleSearch} className="relative mb-4">
               <MagnifyingGlass weight="regular" aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
@@ -137,18 +123,18 @@ export function PublicNavbar() {
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
                 placeholder="Search events"
-                className="focus-ring h-11 w-full rounded-lg border border-white/10 bg-white/[0.06] pl-9 pr-3 text-sm text-white placeholder:text-slate-500 focus:border-teal-500/60"
+                className="focus-ring h-11 w-full rounded-lg border border-slate-200 dark:border-white/10 bg-slate-900/5 dark:bg-white/[0.06] pl-9 pr-3 text-sm text-slate-900 dark:text-white placeholder:text-slate-500 focus:border-teal-500/60"
               />
             </form>
             <nav className="grid gap-1" aria-label="Mobile navigation">
               <NavLink to="/" end className={navClassName}>Home</NavLink>
               <NavLink to="/events" className={navClassName}>Events</NavLink>
               <NavLink to={organizePath} className={navClassName}>Organize</NavLink>
-              <Link to="/#pricing" className={`${baseNavLink} text-slate-300`}>Pricing</Link>
-              <Link to="/#about" className={`${baseNavLink} text-slate-300`}>About</Link>
+              <Link to="/#pricing" className={`${baseNavLink} text-slate-600 dark:text-slate-300`}>Pricing</Link>
+              <Link to="/#about" className={`${baseNavLink} text-slate-600 dark:text-slate-300`}>About</Link>
               {user ? <NavLink to="/bookings" className={navClassName}>My tickets</NavLink> : null}
             </nav>
-            <div className="mt-4 flex gap-2 border-t border-white/10 pt-4">
+            <div className="mt-4 flex gap-2 border-t border-slate-200 dark:border-white/10 pt-4">
               {user ? (
                 <>
                   <Link to={dashboardPath} className="flex-1">
@@ -158,7 +144,7 @@ export function PublicNavbar() {
                     type="button"
                     variant="nav"
                     size="compact"
-                    className="!h-10 !w-10 shrink-0 rounded-lg border border-white/10 bg-white/[0.04] !px-0 hover:border-teal-400/30 hover:bg-teal-400/10"
+                    className="!h-10 !w-10 shrink-0 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-900/5 dark:bg-white/[0.04] !px-0 hover:border-teal-400/30 hover:bg-teal-400/10"
                     onClick={logout}
                     aria-label="Sign out"
                     title="Sign out"

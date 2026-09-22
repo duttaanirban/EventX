@@ -9,12 +9,18 @@
   -webkit-font-smoothing: antialiased;
   --surface: #ffffff;
   --text: #121417;
+  --border: #e2e8f0;
+  --muted: #475569;
+  --chart-accent: #0f766e;
 }
 
 .dark {
   color-scheme: dark;
   --surface: #15171d;
   --text: #f8fafc;
+  --border: rgba(255, 255, 255, 0.1);
+  --muted: #94a3b8;
+  --chart-accent: #2dd4bf;
 }
 
 body {

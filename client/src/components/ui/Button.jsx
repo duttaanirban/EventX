@@ -4,8 +4,8 @@ import { clsx } from 'clsx';
 const variants = {
   primary: 'bg-ink text-white hover:bg-black dark:bg-white dark:text-ink dark:hover:bg-slate-200',
   accent: 'bg-teal-500 text-[#031513] shadow-[0_8px_24px_rgba(20,184,166,0.18)] hover:bg-teal-400 hover:shadow-[0_10px_30px_rgba(20,184,166,0.28)]',
-  outline: 'border border-white/15 bg-white/[0.04] text-white hover:border-teal-400/40 hover:bg-teal-400/10 hover:text-teal-100',
-  nav: 'bg-transparent text-slate-200 hover:bg-white/[0.08] hover:text-white',
+  outline: 'border border-slate-200 dark:border-white/15 bg-slate-900/5 dark:bg-white/[0.04] text-slate-900 dark:text-white hover:border-teal-400/40 hover:bg-teal-400/10 hover:text-teal-700 dark:hover:text-teal-100',
+  nav: 'bg-transparent text-slate-700 dark:text-slate-200 hover:bg-slate-900/5 dark:hover:bg-white/[0.08] hover:text-slate-900 dark:hover:text-white',
   ghost: 'bg-transparent text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-white/10',
   danger: 'bg-berry text-white hover:bg-rose-800'
 };

@@ -41,7 +41,7 @@ export default function BookingHistoryPage() {
             {booking.qrCode ? (
               <img src={booking.qrCode} alt={`QR ticket for ${booking.event?.title}`} className="h-32 w-32 rounded-lg bg-white p-2" />
             ) : (
-              <div className="grid h-32 w-32 place-items-center rounded-lg bg-slate-100 text-slate-400 dark:bg-white/10">
+              <div className="grid h-32 w-32 place-items-center rounded-lg bg-slate-100 text-slate-600 dark:text-slate-400 dark:bg-white/10">
                 <QrCode weight="regular" aria-hidden="true" className="h-8 w-8" />
               </div>
             )}

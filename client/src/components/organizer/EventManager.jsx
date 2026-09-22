@@ -67,7 +67,7 @@ export function EventManager() {
     <div className="space-y-5">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="text-lg font-semibold text-slate-100">Your events</h2>
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Your events</h2>
           <p className="mt-1 text-sm text-slate-500">
             {isLoading ? 'Loading event inventory...' : `${events.length} ${events.length === 1 ? 'event' : 'events'} in your workspace`}
           </p>
@@ -97,12 +97,12 @@ export function EventManager() {
 
       {isLoading ? (
         <div className="grid gap-3" aria-busy="true" aria-label="Loading events">
-          {Array.from({ length: 3 }).map((_, index) => <Skeleton key={index} className="h-32 !rounded-xl !bg-white/5" />)}
+          {Array.from({ length: 3 }).map((_, index) => <Skeleton key={index} className="h-32 !rounded-xl !bg-slate-900/5 dark:!bg-white/5" />)}
         </div>
       ) : null}
 
       {!isLoading && isError ? (
-        <div role="alert" className="rounded-xl border border-rose-400/20 bg-rose-950/20 p-5 text-center text-sm text-rose-100">
+        <div role="alert" className="rounded-xl border border-rose-400/20 bg-rose-950/20 p-5 text-center text-sm text-rose-700 dark:text-rose-100">
           Unable to load your events. Please try again later.
         </div>
       ) : null}
@@ -122,43 +122,43 @@ export function EventManager() {
           const soldPercentage = event.totalSeats ? Math.min((sold / event.totalSeats) * 100, 100) : 0;
 
           return (
-            <article key={event._id} className="overflow-hidden rounded-xl border border-white/[0.08] bg-[#101720]">
+            <article key={event._id} className="overflow-hidden rounded-xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#101720]">
               <div className="grid gap-4 p-4 md:grid-cols-[7rem_minmax(0,1fr)_auto] md:items-center">
                 <img src={event.bannerImage} alt={event.title + ' banner'} className="aspect-video h-full max-h-24 w-full rounded-lg object-cover md:aspect-auto md:w-28" />
 
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="rounded-full border border-teal-300/15 bg-teal-400/10 px-2.5 py-1 text-[0.7rem] font-semibold text-teal-200">
+                    <span className="rounded-full border border-teal-300/15 bg-teal-400/10 px-2.5 py-1 text-[0.7rem] font-semibold text-teal-700 dark:text-teal-200">
                       {event.category}
                     </span>
                     <span className="text-xs font-medium text-slate-500">{formatCurrency(event.ticketPrice)}</span>
                   </div>
-                  <h3 className="mt-2 truncate text-base font-semibold text-slate-100">{event.title}</h3>
-                  <div className="mt-2 flex flex-wrap gap-x-4 gap-y-2 text-xs text-slate-400">
+                  <h3 className="mt-2 truncate text-base font-semibold text-slate-900 dark:text-slate-100">{event.title}</h3>
+                  <div className="mt-2 flex flex-wrap gap-x-4 gap-y-2 text-xs text-slate-600 dark:text-slate-400">
                     <span className="inline-flex items-center gap-1.5">
-                      <CalendarDots weight="duotone" aria-hidden="true" className="h-4 w-4 text-teal-300" />
+                      <CalendarDots weight="duotone" aria-hidden="true" className="h-4 w-4 text-teal-700 dark:text-teal-300" />
                       {formatDate(event.date)}
                     </span>
                     <span className="inline-flex items-center gap-1.5">
-                      <MapPin weight="duotone" aria-hidden="true" className="h-4 w-4 text-sky-300" />
+                      <MapPin weight="duotone" aria-hidden="true" className="h-4 w-4 text-sky-700 dark:text-sky-300" />
                       {event.city}
                     </span>
                     <span className="inline-flex items-center gap-1.5">
-                      <Ticket weight="duotone" aria-hidden="true" className="h-4 w-4 text-orange-300" />
+                      <Ticket weight="duotone" aria-hidden="true" className="h-4 w-4 text-orange-700 dark:text-orange-300" />
                       {sold} sold / {event.totalSeats}
                     </span>
                   </div>
-                  <div className="mt-3 h-1.5 max-w-md overflow-hidden rounded-full bg-white/[0.07]" aria-hidden="true">
+                  <div className="mt-3 h-1.5 max-w-md overflow-hidden rounded-full bg-slate-900/5 dark:bg-white/[0.07]" aria-hidden="true">
                     <div className="h-full rounded-full bg-teal-400" style={{ width: `${soldPercentage}%` }} />
                   </div>
                 </div>
 
                 <div className="flex flex-wrap gap-2 md:justify-end">
-                  <Button type="button" size="compact" variant="nav" className="border border-white/10" onClick={() => setAttendeeEvent(event)}>
+                  <Button type="button" size="compact" variant="nav" className="border border-slate-200 dark:border-white/10" onClick={() => setAttendeeEvent(event)}>
                     <Users weight="regular" aria-hidden="true" className="h-4 w-4" />
                     Attendees
                   </Button>
-                  <Button type="button" size="compact" variant="nav" className="border border-white/10" onClick={() => setEditingEvent(event)}>
+                  <Button type="button" size="compact" variant="nav" className="border border-slate-200 dark:border-white/10" onClick={() => setEditingEvent(event)}>
                     <PencilSimple weight="regular" aria-hidden="true" className="h-4 w-4" />
                     Edit
                   </Button>
@@ -194,25 +194,25 @@ function AttendeeList({ event, onClose }) {
   const bookings = data?.bookings || [];
 
   return (
-    <section className="border-t border-white/[0.08] bg-black/10 px-4 py-4" aria-labelledby={`attendees-${event._id}`}>
+    <section className="border-t border-slate-200 dark:border-white/[0.08] bg-slate-900/5 dark:bg-black/10 px-4 py-4" aria-labelledby={`attendees-${event._id}`}>
       <div className="flex items-center justify-between gap-3">
         <div>
-          <h4 id={`attendees-${event._id}`} className="text-sm font-semibold text-slate-100">Attendees</h4>
+          <h4 id={`attendees-${event._id}`} className="text-sm font-semibold text-slate-900 dark:text-slate-100">Attendees</h4>
           <p className="mt-0.5 text-xs text-slate-500">{event.title}</p>
         </div>
-        <button type="button" onClick={onClose} className="focus-ring grid h-9 w-9 place-items-center rounded-lg text-slate-400 transition hover:bg-white/[0.06] hover:text-white" aria-label="Close attendee list">
+        <button type="button" onClick={onClose} className="focus-ring grid h-9 w-9 place-items-center rounded-lg text-slate-600 dark:text-slate-400 transition hover:bg-slate-900/5 dark:hover:bg-white/[0.06] hover:text-slate-900 dark:hover:text-white" aria-label="Close attendee list">
           <X weight="regular" aria-hidden="true" className="h-4 w-4" />
         </button>
       </div>
 
-      {isLoading ? <Skeleton className="mt-4 h-24 !bg-white/5" /> : null}
-      {!isLoading && isError ? <p role="alert" className="mt-4 text-sm text-rose-300">Unable to load attendees.</p> : null}
+      {isLoading ? <Skeleton className="mt-4 h-24 !bg-slate-900/5 dark:!bg-white/5" /> : null}
+      {!isLoading && isError ? <p role="alert" className="mt-4 text-sm text-rose-700 dark:text-rose-300">Unable to load attendees.</p> : null}
       {!isLoading && !isError && !bookings.length ? <p className="mt-4 text-sm text-slate-500">No confirmed bookings yet.</p> : null}
 
       {!isLoading && !isError && bookings.length ? (
         <div className="mt-4 overflow-x-auto">
           <table className="w-full min-w-[36rem] text-left text-sm">
-            <thead className="border-b border-white/[0.08] text-xs uppercase text-slate-500">
+            <thead className="border-b border-slate-200 dark:border-white/[0.08] text-xs uppercase text-slate-500">
               <tr>
                 <th scope="col" className="px-3 py-2.5 font-semibold">Name</th>
                 <th scope="col" className="px-3 py-2.5 font-semibold">Email</th>
@@ -220,15 +220,15 @@ function AttendeeList({ event, onClose }) {
                 <th scope="col" className="px-3 py-2.5 font-semibold">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/[0.06]">
+            <tbody className="divide-y divide-slate-200 dark:divide-white/[0.06]">
               {bookings.map((booking) => (
-                <tr key={booking._id} className="text-slate-300">
-                  <td className="px-3 py-3 font-medium text-slate-100">{booking.user?.name}</td>
-                  <td className="px-3 py-3 text-slate-400">{booking.user?.email}</td>
+                <tr key={booking._id} className="text-slate-600 dark:text-slate-300">
+                  <td className="px-3 py-3 font-medium text-slate-900 dark:text-slate-100">{booking.user?.name}</td>
+                  <td className="px-3 py-3 text-slate-600 dark:text-slate-400">{booking.user?.email}</td>
                   <td className="px-3 py-3">{booking.ticketCount}</td>
                   <td className="px-3 py-3">
                     <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${
-                      booking.checkedIn ? 'bg-teal-400/10 text-teal-200' : 'bg-white/[0.06] text-slate-300'
+                      booking.checkedIn ? 'bg-teal-400/10 text-teal-700 dark:text-teal-200' : 'bg-slate-900/5 dark:bg-white/[0.06] text-slate-600 dark:text-slate-300'
                     }`}>
                       {booking.checkedIn ? 'Checked in' : booking.bookingStatus}
                     </span>

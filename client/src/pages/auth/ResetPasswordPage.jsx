@@ -38,11 +38,11 @@ export default function ResetPasswordPage() {
   return (
     <AuthShell standalone>
       <header>
-        <span className="grid h-11 w-11 place-items-center rounded-xl border border-teal-300/15 bg-teal-400/10 text-teal-300">
+        <span className="grid h-11 w-11 place-items-center rounded-xl border border-teal-300/15 bg-teal-400/10 text-teal-700 dark:text-teal-300">
           <Key weight="duotone" aria-hidden="true" className="h-6 w-6" />
         </span>
         <h1 className="mt-5 text-3xl font-bold tracking-normal">Set a new password</h1>
-        <p className="mt-2 text-sm leading-6 text-slate-400">Choose a secure password with at least 8 characters.</p>
+        <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">Choose a secure password with at least 8 characters.</p>
       </header>
 
       <form onSubmit={handleSubmit(onSubmit)} className="mt-7" noValidate>
@@ -54,7 +54,7 @@ export default function ResetPasswordPage() {
           error={errors.password?.message}
         />
         {errors.root?.message ? (
-          <p role="alert" className="mt-4 rounded-xl border border-rose-400/20 bg-rose-950/25 px-3.5 py-3 text-sm font-medium text-rose-200">
+          <p role="alert" className="mt-4 rounded-xl border border-rose-400/20 bg-rose-950/25 px-3.5 py-3 text-sm font-medium text-rose-700 dark:text-rose-200">
             {errors.root.message}
           </p>
         ) : null}

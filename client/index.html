@@ -3,9 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0f172a" />
+    <meta name="theme-color" content="#f8fafc" />
+    <script>
+      try {
+        const dark = localStorage.getItem('eventx_theme') === 'dark';
+        document.documentElement.classList.toggle('dark', dark);
+        document.querySelector('meta[name="theme-color"]').setAttribute('content', dark ? '#080d14' : '#f8fafc');
+      } catch {}
+    </script>
     <link rel="icon" type="image/svg+xml" href="%BASE_URL%eventx-logo.svg" />
-    <title>EventX</title>
+    <title>EventX - Create, Manage, and Experience Better Events</title>
   </head>
   <body>
     <div id="root"></div>

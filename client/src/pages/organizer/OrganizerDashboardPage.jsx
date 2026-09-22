@@ -1,3 +1,5 @@
+import { ThemeToggle } from '../../components/ui/ThemeToggle';
+import { EventXLogo } from '../../components/ui/EventXLogo';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -47,7 +49,7 @@ export default function OrganizerDashboardPage() {
   };
 
   return (
-    <main className="min-h-dvh bg-[#080d14] text-white">
+    <main className="min-h-dvh bg-slate-50 dark:bg-[#080d14] text-slate-900 dark:text-white">
       {isMobileNavOpen ? (
         <button
           type="button"
@@ -60,21 +62,21 @@ export default function OrganizerDashboardPage() {
       <div className="lg:grid lg:grid-cols-[16rem_minmax(0,1fr)]">
         <aside
           id="organizer-navigation"
-          className={`fixed inset-y-0 left-0 z-50 flex h-dvh w-64 flex-col border-r border-white/[0.08] bg-[#0b1119] p-4 shadow-2xl transition-transform duration-200 lg:sticky lg:top-0 lg:z-20 lg:w-auto lg:translate-x-0 lg:shadow-none ${
+          className={`fixed inset-y-0 left-0 z-50 flex h-dvh w-64 flex-col border-r border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0b1119] p-4 shadow-2xl transition-transform duration-200 lg:sticky lg:top-0 lg:z-20 lg:w-auto lg:translate-x-0 lg:shadow-none ${
             isMobileNavOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
         >
           <div className="flex h-14 items-center justify-between">
             <Link to="/" className="focus-ring flex items-center gap-3 rounded-lg" aria-label="EventX home">
-              <img src={`${import.meta.env.BASE_URL}eventx-logo.svg`} alt="" aria-hidden="true" className="h-9 w-9 shrink-0" />
+              <EventXLogo className="h-9 w-9" />
               <div>
-                <p className="text-sm font-bold text-white">EventX</p>
+                <p className="text-sm font-bold text-slate-900 dark:text-white">EventX</p>
                 <p className="text-xs text-slate-500">Organizer Console</p>
               </div>
             </Link>
             <button
               type="button"
-              className="focus-ring grid h-9 w-9 place-items-center rounded-lg text-slate-400 hover:bg-white/[0.06] hover:text-white lg:hidden"
+              className="focus-ring grid h-9 w-9 place-items-center rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-900/5 dark:hover:bg-white/[0.06] hover:text-slate-900 dark:hover:text-white lg:hidden"
               onClick={() => setIsMobileNavOpen(false)}
               aria-label="Close dashboard navigation"
             >
@@ -84,10 +86,10 @@ export default function OrganizerDashboardPage() {
 
           <DashboardNavigation active={activeSection} onChange={selectSection} className="mt-8" />
 
-          <div className="mt-auto space-y-1 border-t border-white/[0.08] pt-4">
+          <div className="mt-auto space-y-1 border-t border-slate-200 dark:border-white/[0.08] pt-4">
             <Link
               to="/"
-              className="focus-ring flex h-11 items-center gap-3 rounded-lg px-3 text-sm font-semibold text-slate-400 transition hover:bg-white/[0.05] hover:text-slate-100"
+              className="focus-ring flex h-11 items-center gap-3 rounded-lg px-3 text-sm font-semibold text-slate-600 dark:text-slate-400 transition hover:bg-slate-900/5 dark:hover:bg-white/[0.05] hover:text-slate-900 dark:hover:text-slate-100"
             >
               <House weight="regular" aria-hidden="true" className="h-5 w-5" />
               Back to site
@@ -95,7 +97,7 @@ export default function OrganizerDashboardPage() {
             <button
               type="button"
               onClick={logout}
-              className="focus-ring flex h-11 w-full items-center gap-3 rounded-lg px-3 text-left text-sm font-semibold text-slate-400 transition hover:bg-rose-400/10 hover:text-rose-200"
+              className="focus-ring flex h-11 w-full items-center gap-3 rounded-lg px-3 text-left text-sm font-semibold text-slate-600 dark:text-slate-400 transition hover:bg-rose-400/10 hover:text-rose-700 dark:hover:text-rose-200"
             >
               <SignOut weight="regular" aria-hidden="true" className="h-5 w-5" />
               Sign out
@@ -104,11 +106,11 @@ export default function OrganizerDashboardPage() {
         </aside>
 
         <div className="min-w-0">
-          <header className="sticky top-0 z-30 border-b border-white/[0.08] bg-[#0b1119]/90 px-4 backdrop-blur-xl sm:px-6 lg:px-8">
+          <header className="sticky top-0 z-30 border-b border-slate-200 dark:border-white/[0.08] bg-white/90 dark:bg-[#0b1119]/90 px-4 backdrop-blur-xl sm:px-6 lg:px-8">
             <div className="flex h-16 items-center gap-4">
               <button
                 type="button"
-                className="focus-ring grid h-10 w-10 place-items-center rounded-lg border border-white/10 text-slate-300 transition hover:border-teal-400/30 hover:text-teal-200 lg:hidden"
+                className="focus-ring grid h-10 w-10 place-items-center rounded-lg border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 transition hover:border-teal-400/30 hover:text-teal-700 dark:hover:text-teal-200 lg:hidden"
                 onClick={() => setIsMobileNavOpen(true)}
                 aria-expanded={isMobileNavOpen}
                 aria-controls="organizer-navigation"
@@ -117,18 +119,19 @@ export default function OrganizerDashboardPage() {
                 <List weight="regular" aria-hidden="true" className="h-5 w-5" />
               </button>
 
-              <p className="hidden text-sm font-semibold text-slate-300 sm:block">{sections.find((section) => section.id === activeSection)?.label}</p>
+              <p className="hidden text-sm font-semibold text-slate-600 dark:text-slate-300 sm:block">{sections.find((section) => section.id === activeSection)?.label}</p>
 
               <div className="ml-auto flex min-w-0 items-center gap-3">
+                <ThemeToggle />
                 {user?.avatar ? (
-                  <img src={user.avatar} alt="" className="h-9 w-9 rounded-full border border-white/10 object-cover" />
+                  <img src={user.avatar} alt="" className="h-9 w-9 rounded-full border border-slate-200 dark:border-white/10 object-cover" />
                 ) : (
-                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-teal-400/10 text-sm font-bold text-teal-200">
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-teal-400/10 text-sm font-bold text-teal-700 dark:text-teal-200">
                     {user?.name?.charAt(0)?.toUpperCase() || 'O'}
                   </span>
                 )}
                 <div className="hidden min-w-0 sm:block">
-                  <p className="max-w-48 truncate text-sm font-semibold text-slate-100">{user?.name || 'Organizer'}</p>
+                  <p className="max-w-48 truncate text-sm font-semibold text-slate-900 dark:text-slate-100">{user?.name || 'Organizer'}</p>
                   <p className="text-xs capitalize text-slate-500">{user?.role || 'organizer'}</p>
                 </div>
               </div>
@@ -137,9 +140,9 @@ export default function OrganizerDashboardPage() {
 
           <div className="mx-auto max-w-[82rem] px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
             <header className="mb-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-teal-300">Organizer workspace</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-teal-700 dark:text-teal-300">Organizer workspace</p>
               <h1 className="mt-2 text-2xl font-bold tracking-normal sm:text-3xl">{activeMeta.title}</h1>
-              <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">{activeMeta.description}</p>
+              <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600 dark:text-slate-400">{activeMeta.description}</p>
             </header>
 
             {activeSection === 'analytics' ? <OrganizerAnalytics onOpenEvents={() => selectSection('events')} /> : null}
@@ -162,8 +165,8 @@ function DashboardNavigation({ active, onChange, className = '' }) {
           onClick={() => onChange(id)}
           className={`focus-ring flex h-11 w-full items-center gap-3 rounded-lg px-3 text-left text-sm font-semibold transition ${
             active === id
-              ? 'bg-teal-400/10 text-teal-200'
-              : 'text-slate-400 hover:bg-white/[0.05] hover:text-slate-100'
+              ? 'bg-teal-400/10 text-teal-700 dark:text-teal-200'
+              : 'text-slate-600 dark:text-slate-400 hover:bg-slate-900/5 dark:hover:bg-white/[0.05] hover:text-slate-900 dark:hover:text-slate-100'
           }`}
           aria-current={active === id ? 'page' : undefined}
         >

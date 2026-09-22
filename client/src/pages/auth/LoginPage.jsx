@@ -57,9 +57,9 @@ export default function LoginPage() {
   return (
     <AuthShell standalone>
       <header>
-        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-teal-300">EventX account</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-teal-700 dark:text-teal-300">EventX account</p>
         <h1 className="mt-3 text-3xl font-bold tracking-normal">Welcome back</h1>
-        <p className="mt-2 text-sm leading-6 text-slate-400">Sign in to continue to EventX.</p>
+        <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">Sign in to continue to EventX.</p>
       </header>
 
       <form onSubmit={handleSubmit(onSubmit)} className="mt-7" noValidate>
@@ -83,7 +83,7 @@ export default function LoginPage() {
               error={errors.password?.message}
             />
             <div className="mt-2 text-right">
-              <Link className="focus-ring rounded text-xs font-semibold text-slate-400 transition hover:text-teal-200" to="/forgot-password">
+              <Link className="focus-ring rounded text-xs font-semibold text-slate-600 dark:text-slate-400 transition hover:text-teal-700 dark:hover:text-teal-200" to="/forgot-password">
                 Forgot password?
               </Link>
             </div>
@@ -91,7 +91,7 @@ export default function LoginPage() {
         </div>
 
         {errors.root?.message ? (
-          <p role="alert" className="mt-4 rounded-xl border border-rose-400/20 bg-rose-950/25 px-3.5 py-3 text-sm font-medium text-rose-200">
+          <p role="alert" className="mt-4 rounded-xl border border-rose-400/20 bg-rose-950/25 px-3.5 py-3 text-sm font-medium text-rose-700 dark:text-rose-200">
             {errors.root.message}
           </p>
         ) : null}
@@ -103,22 +103,22 @@ export default function LoginPage() {
       </form>
 
       <div className="my-7 flex items-center gap-3" aria-hidden="true">
-        <span className="h-px flex-1 bg-white/[0.08]" />
+        <span className="h-px flex-1 bg-slate-900/5 dark:bg-white/[0.08]" />
         <span className="text-xs font-medium text-slate-600">OR</span>
-        <span className="h-px flex-1 bg-white/[0.08]" />
+        <span className="h-px flex-1 bg-slate-900/5 dark:bg-white/[0.08]" />
       </div>
 
       <a
         href={authService.googleUrl}
-        className="focus-ring flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.035] text-sm font-semibold text-slate-200 transition hover:border-teal-400/30 hover:bg-teal-400/[0.07] hover:text-white"
+        className="focus-ring flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-900/5 dark:bg-white/[0.035] text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:border-teal-400/30 hover:bg-teal-400/[0.07] hover:text-slate-900 dark:hover:text-white"
       >
         <GoogleLogo weight="bold" aria-hidden="true" className="h-5 w-5" />
         Continue with Google
       </a>
 
-      <p className="mt-6 text-center text-sm text-slate-400">
+      <p className="mt-6 text-center text-sm text-slate-600 dark:text-slate-400">
         Don&apos;t have an account?{' '}
-        <Link className="focus-ring rounded font-semibold text-teal-300 transition hover:text-teal-200" to="/register">
+        <Link className="focus-ring rounded font-semibold text-teal-700 dark:text-teal-300 transition hover:text-teal-700 dark:hover:text-teal-200" to="/register">
           Create one
         </Link>
       </p>

@@ -48,9 +48,9 @@ export default function RegisterPage() {
   return (
     <AuthShell standalone panelClassName="max-w-lg">
       <header>
-        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-teal-300">Join EventX</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-teal-700 dark:text-teal-300">Join EventX</p>
         <h1 className="mt-3 text-3xl font-bold tracking-normal">Create your EventX account</h1>
-        <p className="mt-2 text-sm leading-6 text-slate-400">Join EventX and start discovering or organizing events.</p>
+        <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">Join EventX and start discovering or organizing events.</p>
       </header>
 
       <form onSubmit={handleSubmit(onSubmit)} className="mt-7" noValidate>
@@ -83,29 +83,29 @@ export default function RegisterPage() {
           />
 
           <fieldset>
-            <legend className="mb-2 text-sm font-medium text-slate-200">Account type</legend>
+            <legend className="mb-2 text-sm font-medium text-slate-700 dark:text-slate-200">Account type</legend>
             <div className="grid gap-3 sm:grid-cols-2">
               {roleOptions.map(({ value, title, description, icon: Icon }) => (
                 <label key={value} className="relative cursor-pointer">
                   <input type="radio" value={value} {...register('role')} className="peer sr-only" />
-                  <span className="flex min-h-20 items-center gap-3 rounded-xl border border-white/10 bg-white/[0.035] p-3.5 transition hover:border-white/20 peer-checked:border-teal-400/60 peer-checked:bg-teal-400/10 peer-focus-visible:ring-2 peer-focus-visible:ring-teal-500 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-[#101720]">
-                    <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-lg ${selectedRole === value ? 'bg-teal-400/15 text-teal-300' : 'bg-white/[0.06] text-slate-400'}`}>
+                  <span className="flex min-h-20 items-center gap-3 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-900/5 dark:bg-white/[0.035] p-3.5 transition hover:border-slate-200 dark:hover:border-white/20 peer-checked:border-teal-400/60 peer-checked:bg-teal-400/10 peer-focus-visible:ring-2 peer-focus-visible:ring-teal-500 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-white dark:peer-focus-visible:ring-offset-[#101720]">
+                    <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-lg ${selectedRole === value ? 'bg-teal-400/15 text-teal-700 dark:text-teal-300' : 'bg-slate-900/5 dark:bg-white/[0.06] text-slate-600 dark:text-slate-400'}`}>
                       <Icon weight="duotone" aria-hidden="true" className="h-5 w-5" />
                     </span>
                     <span className="min-w-0">
-                      <span className="block text-sm font-semibold text-slate-100">{title}</span>
+                      <span className="block text-sm font-semibold text-slate-900 dark:text-slate-100">{title}</span>
                       <span className="mt-0.5 block text-xs leading-4 text-slate-500">{description}</span>
                     </span>
                   </span>
                 </label>
               ))}
             </div>
-            {errors.role?.message ? <p role="alert" className="mt-1.5 text-xs font-medium text-rose-400">{errors.role.message}</p> : null}
+            {errors.role?.message ? <p role="alert" className="mt-1.5 text-xs font-medium text-rose-700 dark:text-rose-400">{errors.role.message}</p> : null}
           </fieldset>
         </div>
 
         {errors.root?.message ? (
-          <p role="alert" className="mt-4 rounded-xl border border-rose-400/20 bg-rose-950/25 px-3.5 py-3 text-sm font-medium text-rose-200">
+          <p role="alert" className="mt-4 rounded-xl border border-rose-400/20 bg-rose-950/25 px-3.5 py-3 text-sm font-medium text-rose-700 dark:text-rose-200">
             {errors.root.message}
           </p>
         ) : null}
@@ -116,9 +116,9 @@ export default function RegisterPage() {
         </Button>
       </form>
 
-      <p className="mt-6 text-center text-sm text-slate-400">
+      <p className="mt-6 text-center text-sm text-slate-600 dark:text-slate-400">
         Already have an account?{' '}
-        <Link className="focus-ring rounded font-semibold text-teal-300 transition hover:text-teal-200" to="/login">
+        <Link className="focus-ring rounded font-semibold text-teal-700 dark:text-teal-300 transition hover:text-teal-700 dark:hover:text-teal-200" to="/login">
           Sign in
         </Link>
       </p>
